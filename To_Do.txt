@@ -1,0 +1,1 @@
+JSON for the all Status, even if they are not going to be implemented at the begining, trying to explain which are the effects of each one.
