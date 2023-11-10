@@ -1,0 +1,140 @@
+{
+    "Charizard":{
+        "HP":153,
+        "Attack":114,
+        "Defense":107,
+        "Speed":132,
+        "Special_Attack":141,
+        "Special_Defend":115,
+        "PrimaryType":"Fire",
+        "SecondaryType":"Flying",
+        "Mov1":"Fire Blast",
+        "Mov2":"Flamethrower",
+        "Mov3":"Hurricane",
+        "Mov4":"Earthquake"
+
+    },
+    "Venusaur":{
+        "HP":155,
+        "Attack":112,
+        "Defense":113,
+        "Speed":110,
+        "Special_Attack":132,
+        "Special_Defend":132,
+        "PrimaryType":"Grass",
+        "SecondaryType":"Poison",
+        "Mov1":"Sludge Bomb",
+        "Mov2":"Power Whip",
+        "Mov3":"Syntesis",
+        "Mov4":"Earthquake"
+    },
+    "Blastoise":{
+        "HP":154,
+        "Attack":113,
+        "Defense":132,
+        "Speed":107,
+        "Special_Attack":115,
+        "Special_Defend":137,
+        "PrimaryType":"Water",
+        "Mov1":"Hydro Pump",
+        "Mov2":"Surf",
+        "Mov3":"Ice Punch",
+        "Mov4":"Headbutt"
+    },
+    "Snorlax":{
+        "HP":235,
+        "Attack":143,
+        "Defense":93,
+        "Speed":55,
+        "Special_Attack":93,
+        "Special_Defend":143,
+        "PrimaryType":"Normal",
+        "Mov1":"Hyper Beam",
+        "Mov2":"Headbutt",
+        "Mov3":"Soft Boiled",
+        "Mov4":"Earthquake"
+    },
+    "Pikachu":{
+        "HP":126,
+        "Attack":100,
+        "Defense":83,
+        "Speed":138,
+        "Special_Attack":94,
+        "Special_Defend":94,
+        "PrimaryType":"Electric",
+        "Mov1":"Thunderbolt",
+        "Mov2":"Thunder",
+        "Mov3":"Surf",
+        "Mov4":"Zen Headbutt"
+    },
+    "Machamp":{
+        "HP":164,
+        "Attack":165,
+        "Defense":110,
+        "Speed":82,
+        "Special_Attack":93,
+        "Special_Defend":115,
+        "PrimaryType":"Fighting",
+        "Mov1":"Submission",
+        "Mov2":"Body Slam",
+        "Mov3":"Brick Break",
+        "Mov4":"Rock Slide"
+        
+    },
+    "Gengar":{
+        "HP":135,
+        "Attack":93,
+        "Defense":88,
+        "Speed":143,
+        "Special_Attack":165,
+        "Special_Defend":104,
+        "PrimaryType":"Ghost",
+        "SecondaryType":"Poison",
+        "Mov1":"Sludge Bomb",
+        "Mov2":"Shadow Ball",
+        "Mov3":"Thunderbolt",
+        "Mov4":"Spychic"
+    },
+    "Mewtwo":{
+        "HP":181,
+        "Attack":143,
+        "Defense":121,
+        "Speed":165,
+        "Special_Attack":191,
+        "Special_Defend":121,
+        "PrimaryType":"Psychic",
+        "Mov1":"Psychic",
+        "Mov2":"Shadow Ball",
+        "Mov3":"Blizzard",
+        "Mov4":"Hyper Beam"
+    },
+    "Golem":{
+        "HP":155,
+        "Attack":154,
+        "Defense":165,
+        "Speed":71,
+        "Special_Attack":82,
+        "Special_Defend":93,
+        "PrimaryType":"Rock",
+        "SecondaryType":"Ground",
+        "Mov1":"Rock Slide",
+        "Mov2":"Earthquake",
+        "Mov3":"Explosion",
+        "Mov4":"Stone Edge"
+        
+    },
+    "Pinsir":{
+        "HP":140,
+        "Attack":159,
+        "Defense":132,
+        "Speed":115,
+        "Special_Attack":82,
+        "Special_Defend":99,
+        "PrimaryType":"Bug",
+        "Mov1":"Megahorn",
+        "Mov2":"Headbutt",
+        "Mov3":"Brick Break",
+        "Mov4":"X-Scissor"
+
+    }
+}

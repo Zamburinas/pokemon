@@ -4,14 +4,14 @@ public class Pokemon {
     private String secondaryType;
     private Stats stats;
     private Move[] moves;
-    private State state;
+    private Status status;
 
     public Pokemon(String name, String primaryType, int level, int healthPoints, int attack, int defense, int special, int specialDefense, int speed) {
         this.name = name;
         this.primaryType = primaryType;
         this.stats = new Stats(level, healthPoints, attack, defense, special, specialDefense, speed);
         this.moves = new Move[4];
-        this.state = new State("normal");
+        this.status = new Status("normal");
     }
 
     public Pokemon(String name, String primaryType, String secondaryType, int level, int healthPoints, int attack, int defense, int special, int specialDefense, int speed) {
@@ -23,7 +23,7 @@ public class Pokemon {
     }
 
     public Stats getStats() {
-        return stats;
+        return this.stats;
     }
 
     public void setStats(Stats stats) {
@@ -44,22 +44,22 @@ public class Pokemon {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
-    public State getState() {
-        return this.state;
+    public Status getStatus() {
+        return this.status;
     }
 
-    public void newState(String state) {
-        this.state.changeState(state);
+    public void newStatus(String status) {
+        this.status= new Status(status);
     }
 
     public String getPrimaryType() {
-        return primaryType;
+        return this.primaryType;
     }
 
     public String getSecondaryType() {
-        return secondaryType;
+        return this.secondaryType;
     }
 }

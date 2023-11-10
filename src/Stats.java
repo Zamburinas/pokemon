@@ -19,7 +19,7 @@ public class Stats {
     }
 
     public int getLevel() {
-        return level;
+        return this.level;
     }
 
     public void setLevel(int level) {
@@ -27,7 +27,7 @@ public class Stats {
     }
 
     public int getHealthPoints() {
-        return healthPoints;
+        return this.healthPoints;
     }
 
     public void setHealthPoints(int healthPoints) {
@@ -35,7 +35,7 @@ public class Stats {
     }
 
     public int getAttack() {
-        return attack;
+        return this.attack;
     }
 
     public void setAttack(int attack) {
@@ -43,7 +43,7 @@ public class Stats {
     }
 
     public int getDefense() {
-        return defense;
+        return this.defense;
     }
 
     public void setDefense(int defense) {
@@ -51,7 +51,7 @@ public class Stats {
     }
 
     public int getSpecialAttack() {
-        return specialAttack;
+        return this.specialAttack;
     }
 
     public void setSpecialAttack(int specialAttack) {
@@ -59,7 +59,7 @@ public class Stats {
     }
 
     public int getSpecialDefense() {
-        return specialDefense;
+        return this.specialDefense;
     }
 
     public void setSpecialDefense(int specialDefense) {
@@ -67,7 +67,7 @@ public class Stats {
     }
 
     public int getSpeed() {
-        return speed;
+        return this.speed;
     }
 
     public void setSpeed(int speed) {

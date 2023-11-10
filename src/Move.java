@@ -4,23 +4,23 @@ public class Move {
     private String category; // Physical, Special and Status
     private int power;
     private int remaining;
-    private float precision;
+    private float accuracy;
 
-    public Move(String name, String type, String category, int power, int remaining, float precision) {
+    public Move(String name, String type, String category, int power, int remaining, float accuracy) {
         this.name = name;
         this.type = type;
         this.power = power;
         this.remaining = remaining;
-        this.precision = precision;
+        this.accuracy = accuracy;
         this.category = category;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public String getType() {
-        return type;
+        return this.type;
     }
 
     public String getCategory(){
@@ -28,18 +28,18 @@ public class Move {
     }
 
     public int getPower() {
-        return power;
+        return this.power;
     }
 
     public float getRemaining(){
         return this.remaining;
     }
 
-    public float getPrecision() {
-        return this.precision;
+    public float getAccuracy() {
+        return this.accuracy;
     }
 
-    public void newRemaining() {
+    public void UpdateRemaining() {
         this.remaining--;
     }
 }

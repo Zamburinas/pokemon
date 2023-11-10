@@ -1,0 +1,218 @@
+{
+    "Fire Blast":{
+        "Power":110,
+        "Accuracy":85,
+        "Type":"Fire",
+        "Category":"Special",
+        "PP":5,
+        "Passive":{"Probability": 10, "Effect": "Burn", "Modifier":{"User":"Enemy","Stat":"attack","Value":0.5}}
+    },
+    "Flamethrower":{
+        "Power":90,
+        "Accuracy":100,
+        "Type":"Fire",
+        "Category":"Special",
+        "PP":15,
+        "Passive":{"Probability": 10, "Effect": "Burn", "Modifier":{"User":"Enemy","Stat":"attack","Value":0.5}}
+    },
+    "Hurricane":{
+        "Power":110,
+        "Accuracy":70,
+        "Type":"Flying",
+        "Category":"Special",
+        "PP":10,
+        "Passive":{"Probability": 10, "Effect": "Confused", "Modifier":{"User":"Enemy","Stat":"","Value":""}}
+    },
+    "Earthquake":{
+        "Power":100,
+        "Accuracy":100,
+        "Type":"Ground",
+        "Category":"Physical",
+        "PP":10,
+        "Passive":{"Probability": 0, "Effect": "", "Modifier":""}
+    },
+    "Sludge Bomb":{
+        "Power":90,
+        "Accuracy":100,
+        "Type":"Poison",
+        "Category":"Special",
+        "PP":10,
+        "Passive":{"Probability": 30, "Effect": "Poison", "Modifier":{"User":"Enemy","Stat":"healthPoints","Value":""}}
+    },
+    "Power Whip":{
+        "Power":120,
+        "Accuracy":85,
+        "Type":"Grass",
+        "Category":"Special",
+        "PP":15,
+        "Passive":{"Probability": 0, "Effect": "", "Modifier":""}
+    },
+    "Syntesis":{
+        "Power":0,
+        "Accuracy":100,
+        "Type":"Grass",
+        "Category":"Status",
+        "PP":5,
+        "Passive":{"Probability": 100, "Effect": "Health", "Modifier":{"User":"Own","Stat":"healthPoints","Value":0.5}}
+    },
+    "Hydro Pump":{
+        "Power":110,
+        "Accuracy":80,
+        "Type":"Water",
+        "Category":"Special",
+        "PP":5,
+        "Passive":{"Probability": 0, "Effect": "", "Modifier":""}
+    },
+    "Surf":{
+        "Power":90,
+        "Accuracy":100,
+        "Type":"Water",
+        "Category":"Special",
+        "PP":15,
+        "Passive":{"Probability": 0, "Effect": "", "Modifier":""}
+    },
+    "Ice Punch":{
+        "Power":75,
+        "Accuracy":100,
+        "Type":"Ice",
+        "Category":"Physical",
+        "PP":15,
+        "Passive":{"Probability": 10, "Effect": "Freeze", "Modifier":{"User":"Enemy","Stat":"","Value":""}}
+    },
+    "Headbutt":{
+        "Power":70,
+        "Accuracy":100,
+        "Type":"Normal",
+        "Category":"Physical",
+        "PP":15,
+        "Passive":{"Probability": 30, "Effect": "Flinch", "Modifier":{"User":"Enemy","Stat":"","Value":""}}
+    },
+    "Hyper Beam":{
+        "Power":150,
+        "Accuracy":90,
+        "Type":"Normal",
+        "Category":"Special",
+        "PP":5,
+        "Passive":{"Probability": 100, "Effect": "Recharge", "Modifier":{"User":"Own","Stat":"","Value":""}}
+    },
+    "Soft Boiled":{
+        "Power":0,
+        "Accuracy":100,
+        "Type":"Normal",
+        "Category":"Status",
+        "PP":5,
+        "Passive":{"Probability": 100, "Effect": "Health", "Modifier":{"User":"Own","Stat":"healthPoints","Value":0.5}}
+    },
+    "Thunderbolt":{
+        "Power":90,
+        "Accuracy":100,
+        "Type":"Electric",
+        "Category":"Special",
+        "PP":15,
+        "Passive":{"Probability": 10, "Effect": "Paralized", "Modifier":{"User":"Enemy","Stat":"speed","Value":0.25}}
+    },
+    "Thunder":{
+        "Power":110,
+        "Accuracy":70,
+        "Type":"Electric",
+        "Category":"Special",
+        "PP":10,
+        "Passive":{"Probability": 30, "Effect": "Paralized", "Modifier":{"User":"Enemy","Stat":"speed","Value":0.25}}
+    },
+    "Zen Headbutt":{
+        "Power":80,
+        "Accuracy":90,
+        "Type":"Psychic",
+        "Category":"Physical",
+        "PP":15,
+        "Passive":{"Probability": 20, "Effect": "Flinch", "Modifier":{"User":"Enemy","Stat":"","Value":""}}
+    },
+    "Submission":{
+        "Power":80,
+        "Accuracy":80,
+        "Type":"Fighting",
+        "Category":"Physical",
+        "PP":15,
+        "Passive":{"Probability": 20, "Effect": "Flinch", "Modifier":{"User":"Enemy","Stat":"","Value":""}}
+    },
+    "Rock Slide":{
+        "Power":75,
+        "Accuracy":90,
+        "Type":"Rock",
+        "Category":"Physical",
+        "PP":15,
+        "Passive":{"Probability": 30, "Effect": "Flinch", "Modifier":{"User":"Enemy","Stat":"","Value":""}}
+    },
+    "Brick Break":{
+        "Power":75,
+        "Accuracy":100,
+        "Type":"Fighting",
+        "Category":"Physical",
+        "PP":15,
+        "Passive":{"Probability": 0, "Effect": "", "Modifier":""}
+    },
+    "Body Slam":{
+        "Power":85,
+        "Accuracy":100,
+        "Type":"Normal",
+        "Category":"Physical",
+        "PP":15,
+        "Passive":{"Probability": 30, "Effect": "Paralized", "Modifier":{"User":"Enemy","Stat":"speed","Value":0.25}}
+    },
+    "Shadow Ball":{
+        "Power":80,
+        "Accuracy":100,
+        "Type":"Ghost",
+        "Category":"Special",
+        "PP":15,
+        "Passive":{"Probability": 20, "Effect": "", "Modifier":{"User":"Enemy","Stat":"SpecialDefense","Value":0.8}}
+    },
+    "Psychic":{
+        "Power":90,
+        "Accuracy":100,
+        "Type":"Psychic",
+        "Category":"Special",
+        "PP":15,
+        "Passive":{"Probability": 10, "Effect": "", "Modifier":{"User":"Enemy","Stat":"SpecialDefense","Value":0.9}}
+    },
+    "Blizzard":{
+        "Power":110,
+        "Accuracy":70,
+        "Type":"Ice",
+        "Category":"Special",
+        "PP":5,
+        "Passive":{"Probability": 10, "Effect": "Freeze", "Modifier":{"User":"Enemy","Stat":"","Value":""}}
+    },
+    "Megahorn":{
+        "Power":120,
+        "Accuracy":85,
+        "Type":"Bug",
+        "Category":"Physical",
+        "PP":10,
+        "Passive":{"Probability": 0, "Effect": "", "Modifier":""}
+    },
+    "Explosion":{
+        "Power":250,
+        "Accuracy":100,
+        "Type":"Normal",
+        "Category":"Physical",
+        "PP":5,
+        "Passive":{"Probability": 100, "Effect": "", "Modifier":{"User":"Own","Stat":"healthPoints","Value":0}}
+    },
+    "X-Scissor":{
+        "Power":80,
+        "Accuracy":100,
+        "Type":"Bug",
+        "Category":"Physical",
+        "PP":15,
+        "Passive":{"Probability": 0, "Effect": "", "Modifier":""}
+    },
+    "Stone Edge":{
+        "Power":100,
+        "Accuracy":80,
+        "Type":"Rock",
+        "Category":"Physical",
+        "PP":5,
+        "Passive":{"Probability": 0, "Effect": "", "Modifier":""}
+    } 
+}
