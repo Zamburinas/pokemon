@@ -39,7 +39,7 @@ public class Move {
         return this.accuracy;
     }
 
-    public void UpdateRemaining() {
+    public void updateRemaining() {
         this.remaining--;
     }
 }

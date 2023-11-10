@@ -11,7 +11,7 @@ public class Pokemon {
         this.primaryType = primaryType;
         this.stats = new Stats(level, healthPoints, attack, defense, special, specialDefense, speed);
         this.moves = new Move[4];
-        this.status = new Status("normal");
+        this.status = new Status("normal", -1, 100, null);
     }
 
     public Pokemon(String name, String primaryType, String secondaryType, int level, int healthPoints, int attack, int defense, int special, int specialDefense, int speed) {
@@ -39,7 +39,7 @@ public class Pokemon {
     }
 
     public Move useMove(int index){
-        this.moves[index].newRemaining();
+        this.moves[index].updateRemaining();
         return this.moves[index];
     }
 
@@ -51,8 +51,8 @@ public class Pokemon {
         return this.status;
     }
 
-    public void newStatus(String status) {
-        this.status= new Status(status);
+    public void changeStatus(String status, int remainingTurns, float probability, String affectedStat) {
+        this.status = new Status(status, remainingTurns, probability, affectedStat);
     }
 
     public String getPrimaryType() {

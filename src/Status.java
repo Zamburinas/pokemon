@@ -1,13 +1,13 @@
 public class Status {
     private int remainingTurns; //-1 inifite or maybe math.infinite (only useful for rest)
     private String name;
-    private float probCure; //Freeze and sleep
+    private float probability; //Freeze and sleep
     private String affectedStat; 
 
-    public Status(int remainingTurns, String name, float probCure, String affectedStat) {
-        this.remainingTurns = -1;
+    public Status(String name, int remainingTurns, float probability, String affectedStat) {
+        this.remainingTurns = remainingTurns;
         this.name = name;
-        this.probCure = probCure;
+        this.probability = probability;
         this.affectedStat = affectedStat;
     }
 
@@ -19,32 +19,27 @@ public class Status {
         this.remainingTurns = remainingTurns;
     }
 
-    public int getName() {
+    public String getName() {
         return this.name;
     }
 
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public int getProbCure() {
-        return this.probCure;
+    public float getProbability() {
+        return this.probability;
     }
 
-    public void setProbCure(int probCure) {
-        this.probCure = probCure;
+    public void setProbability(float probability) {
+        this.probability = probability;
     }
 
-    public int getAffectedStat() {
+    public String getAffectedStat() {
         return this.affectedStat;
     }
 
-    public void setAffectedStat(int affectedStat) {
+    public void setAffectedStat(String affectedStat) {
         this.affectedStat = affectedStat;
     }
-
-    // public void changeStatus(String newState,int remainingTurns,float probCure,String affectedStat){
-    //     // this.remainingTurns = //whatever
-    //     this.name = newState;
-    // }
 }
