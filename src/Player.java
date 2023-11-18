@@ -22,6 +22,12 @@ public class Player {
         }
     }
 
+    public void setPokemonFromTeam(int index) {
+        if (index >= 0 && index < team.size()) {
+            this.currentPokemon = team.get(index);
+        }
+    }
+
     public Pokemon getPokemonFromTeam(int index) {
         if (index >= 0 && index < team.size()) {
             return team.get(index);

@@ -33,7 +33,7 @@ public class Battle {
     private void playerTurn() {
         turnCounter++;
         logMessage("Turn: " + turnCounter);
-        while(player2.getCurrentPokemon().isDead()) player2.getPokemonFromTeam(new Random().nextInt(3));
+        while(player2.getCurrentPokemon().isDead()) player2.setPokemonFromTeam(new Random().nextInt(3));
         logMessage("AI Pok\u00E9mon: " + player2.getCurrentPokemon().getName());
         int selectedMove1 = -1, selectedMove2 = -1;
         Pokemon player1Pokemon = player1.getCurrentPokemon();
@@ -47,7 +47,11 @@ public class Battle {
         do {
             scanner = new Scanner(System.in);
             logMessage("Choose an action:");
-            logMessage("1. Attack with a move");
+            if (!player1Pokemon.isDead()) {
+                logMessage("1. Attack with a move");
+            } else {
+                choice = 2;
+            }
             logMessage("2. Change Pok\u00E9mon");
             choice = scanner.nextInt();
             condition = choice < 0 || choice > 2;
@@ -151,6 +155,9 @@ public class Battle {
         double attack = (double) attacker.getAttack(move.getCategory());
         double defense = (double) defender.getDefense(move.getCategory());
         double normalDamage = (((2*attacker.getLevel() + 10) / 250.0) * (attack/defense)*move.getPower() + 2);
+        if (critical == 2) {
+            logMessage("Critical Damage!");
+        }
         return normalDamage * modifier;
     }
     
