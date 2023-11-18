@@ -10,12 +10,14 @@ public class Player {
         this.team = new ArrayList<>();
     }
 
-    public void addPokemonToTeam(Pokemon pokemon) {
+    public boolean addPokemonToTeam(Pokemon pokemon) {
         if (team.size() < 3) {
             team.add(pokemon);
             System.out.println(pokemon.getName() + " was added to " + playerName + "'s team");
+            return true;
         } else {
             System.out.println("You team is full");
+            return false;
         }
     }
 
