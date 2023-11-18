@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Battle {
@@ -18,25 +19,27 @@ public class Battle {
         System.out.println(player1.getPlayerName() + " sends out " + player1.getCurrentPokemon().getName() + " to the field!");
         System.out.println(player2.getPlayerName() + " sends out " + player2.getCurrentPokemon().getName() + " to the field!");
         
-        while (!isBattleOver()) {
-            playerTurn(player1, player2);
+        while (true) {
+            playerTurn();
             if (isBattleOver()) break; // Verificar si la batalla ha terminado antes del segundo turno
-            playerTurn(player2, player1);
         }
 
         // Mostrar resultados de la batalla...
     }
 
-    private void playerTurn(Player currentPlayer, Player opponentPlayer) {
+    private void playerTurn() {
         turnCounter++;
         System.out.println("Turn: " + turnCounter);
 
+        Move selectedMove1 = null;
+        Move selectedMove2 = null;
+
         // Display details of the current Pokémon and its available moves
-        System.out.println("Current Pokemon:\" " + currentPlayer.getCurrentPokemon().getName());
-        System.out.println("HP: " + currentPlayer.getCurrentPokemon().getStats().getHealthPoints());
+        System.out.println("Current Pokemon:\" " + player1.getCurrentPokemon().getName());
+        System.out.println("HP: " + player1.getCurrentPokemon().getStats().getHealthPoints());
         System.out.println("Available moves:");
-        for (int i = 0; i < currentPlayer.getCurrentPokemon().getMoves().length; i++) {
-            System.out.println((i + 1) + ". " + currentPlayer.getCurrentPokemon().getMoves()[i].getName());
+        for (int i = 0; i < player1.getCurrentPokemon().getMoves().length; i++) {
+            System.out.println((i + 1) + ". " + player1.getCurrentPokemon().getMoves()[i].getName());
         }
 
         Scanner scanner = new Scanner(System.in);
@@ -50,8 +53,8 @@ public class Battle {
             System.out.println("Choose a move (enter move index):");
             int moveIndex = scanner.nextInt();
 
-            if (moveIndex > 0 && moveIndex <= currentPlayer.getCurrentPokemon().getMoves().length) {
-                Move selectedMove = currentPlayer.getCurrentPokemon().getMoves()[moveIndex - 1];
+            if (moveIndex > 0 && moveIndex <= player1.getCurrentPokemon().getMoves().length) {
+                selectedMove1 = player1.getCurrentPokemon().getMoves()[moveIndex - 1];
             } else {
                 System.out.println("Invalid move index. Please choose a valid move.");
             }
@@ -59,30 +62,57 @@ public class Battle {
             // Player wants to change Pokémon
             System.out.println("Choose a Pokémon to switch to (enter Pokémon index):");
             // Display available Pokémon and stats
-            for (int i = 0; i < currentPlayer.getTeam().size(); i++) {
-                Pokemon pokemon = currentPlayer.getTeam().get(i);
+            for (int i = 0; i < player1.getTeam().size(); i++) {
+                Pokemon pokemon = player1.getTeam().get(i);
                 System.out.println((i + 1) + ". " + pokemon.getName() + " (HP: " + pokemon.getStats().getHealthPoints() + ")");
             }
             
             int switchIndex = scanner.nextInt();
 
-            if (switchIndex > 0 && switchIndex <= currentPlayer.getTeam().size()) {
-                Pokemon selectedPokemon = currentPlayer.getPokemonFromTeam(switchIndex - 1);
-                currentPlayer.setCurrentPokemon(selectedPokemon);
-                System.out.println(currentPlayer.getPlayerName() + " switched to " + selectedPokemon.getName() + "!");
+            if (switchIndex > 0 && switchIndex <= player1.getTeam().size()) {
+                Pokemon selectedPokemon = player1.getPokemonFromTeam(switchIndex - 1);
+                player1.setCurrentPokemon(selectedPokemon);
+                System.out.println(player1.getPlayerName() + " switched to " + selectedPokemon.getName() + "!");
             } else {
                 System.out.println("Invalid Pokémon index. Please choose a valid Pokémon.");
             }
         } else {
             System.out.println("Invalid choice. Please choose again.");
         }
+
+        Random random = new Random();
+        int randomMoveIndex = random.nextInt(player2.getCurrentPokemon().getMoves().length);
+        selectedMove2 = player2.getCurrentPokemon().getMoves()[randomMoveIndex];
+
+        resolveTurn(player1.getCurrentPokemon(), player2.getCurrentPokemon(), selectedMove1, selectedMove2);
     }
 
-    private void resolveTurn(Pokemon attacker, Pokemon defender, Move move) {
-        // Logic to calculate damage based on move, attacker, defender types, stats, etc.
-        // Apply status effects, check for effectiveness, calculate damage, and modify health, etc.
-        // Update Pokémon states and display relevant information (damage dealt, status changes, etc.).
+    private void resolveTurn(Pokemon pokemonPlayer1, Pokemon pokemonPlayer2, Move move1, Move move2) {
+        // Attack from player 1 to player 2
+        if (move1 != null) {
+            int damageToPlayer2 = calculateDamage(pokemonPlayer1, pokemonPlayer2, move1);
+            pokemonPlayer2.getStats().setHealthPoints(pokemonPlayer2.getStats().getHealthPoints() - damageToPlayer2);
+            move1.updateRemaining(); // Reduce remaining uses (PP) of the move by one
+            System.out.println(pokemonPlayer1.getName() + " used " + move1.getName() + " dealing " + damageToPlayer2 + " damage to " + pokemonPlayer2.getName());
+        }
+    
+        // Attack from player 2 to player 1
+        if (move2 != null) {
+            int damageToPlayer1 = calculateDamage(pokemonPlayer2, pokemonPlayer1, move2);
+            pokemonPlayer1.getStats().setHealthPoints(pokemonPlayer1.getStats().getHealthPoints() - damageToPlayer1);
+            move2.updateRemaining(); // Reduce remaining uses (PP) of the move by one
+            System.out.println(pokemonPlayer2.getName() + " used " + move2.getName() + " dealing " + damageToPlayer1 + " damage to " + pokemonPlayer1.getName());
+        }
     }
+    
+    // Method to calculate damage
+    private int calculateDamage(Pokemon attacker, Pokemon defender, Move move) {
+        // Logic to calculate damage based on stats, move type, type advantages, etc.
+        // This implementation is simplified and may vary depending on Pokémon rules.
+        // Return a simulated damage value for now
+        return 20; // Simulated damage value
+    }
+    
 
     private boolean isBattleOver() {
         boolean allPlayer1PokemonsFainted = true;
