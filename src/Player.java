@@ -27,7 +27,7 @@ public class Player {
             return team.get(index);
         } else {
             System.out.println("Invalid index. Could not get Pokémon from the team.");
-            return null;
+            return new Pokemon();
         }
     }
 

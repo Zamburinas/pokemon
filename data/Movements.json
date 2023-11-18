@@ -28,8 +28,7 @@
         "Accuracy":100,
         "Type":"Ground",
         "Category":"Physical",
-        "PP":10,
-        "Passive":{"Probability": 0 }
+        "PP":10
     },
     "Sludge Bomb":{
         "Power":90,
@@ -44,8 +43,7 @@
         "Accuracy":85,
         "Type":"Grass",
         "Category":"Special",
-        "PP":15,
-        "Passive":{"Probability": 0 }
+        "PP":15
     },
     "Syntesis":{
         "Power":0,
@@ -60,16 +58,14 @@
         "Accuracy":80,
         "Type":"Water",
         "Category":"Special",
-        "PP":5,
-        "Passive":{"Probability": 0 }
+        "PP":5
     },
     "Surf":{
         "Power":90,
         "Accuracy":100,
         "Type":"Water",
         "Category":"Special",
-        "PP":15,
-        "Passive":{"Probability": 0 }
+        "PP":15
     },
     "Ice Punch":{
         "Power":75,
@@ -148,8 +144,7 @@
         "Accuracy":100,
         "Type":"Fighting",
         "Category":"Physical",
-        "PP":15,
-        "Passive":{"Probability": 0 }
+        "PP":15
     },
     "Body Slam":{
         "Power":85,
@@ -188,8 +183,7 @@
         "Accuracy":85,
         "Type":"Bug",
         "Category":"Physical",
-        "PP":10,
-        "Passive":{"Probability": 0 }
+        "PP":10
     },
     "Explosion":{
         "Power":250,
@@ -204,15 +198,13 @@
         "Accuracy":100,
         "Type":"Bug",
         "Category":"Physical",
-        "PP":15,
-        "Passive":{"Probability": 0 }
+        "PP":15
     },
     "Stone Edge":{
         "Power":100,
         "Accuracy":80,
         "Type":"Rock",
         "Category":"Physical",
-        "PP":5,
-        "Passive":{"Probability": 0 }
+        "PP":5
     } 
 }

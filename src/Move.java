@@ -5,6 +5,7 @@ public class Move {
     private int power;
     private int remaining;
     private float accuracy;
+    private int totalRemaining;
 
     public Move(String name, String type, String category, int power, int remaining, float accuracy) {
         this.name = name;
@@ -13,6 +14,7 @@ public class Move {
         this.remaining = remaining;
         this.accuracy = accuracy;
         this.category = category;
+        this.totalRemaining = this.remaining;
     }
 
     public String getName() {
@@ -31,7 +33,7 @@ public class Move {
         return this.power;
     }
 
-    public float getRemaining(){
+    public int getRemaining(){
         return this.remaining;
     }
 
@@ -41,5 +43,17 @@ public class Move {
 
     public void updateRemaining() {
         this.remaining--;
+    }
+
+    public int getTotalRemaining() {
+        return this.totalRemaining;
+    }
+
+    public String getInfo() {
+        return this.name + "("+ this.remaining + "/" + this.totalRemaining + ") ";
+    }
+
+    public String getMoveStats() {
+        return "Type: " + this.type + " Category: " + this.category + " Power: " + this.power + " Accuracy: " + this.accuracy;
     }
 }

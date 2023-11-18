@@ -67,4 +67,24 @@ public class PokemonDataReader {
 
         return moves;
     }
+
+    public static Map<String, Map<String,Integer>> createTypeTable(String filePath) {
+        Map<String, Map<String,Integer>> moves = new HashMap<>();
+        try {
+            String jsonData = new String(Files.readAllBytes(Paths.get(filePath)));
+            JSONObject types = new JSONObject(jsonData);
+            for (String typeName : types.keySet()) {
+                JSONObject typeData = types.getJSONObject(typeName);
+                Map<String,Integer> movesDamage = new HashMap<>();
+                for (String typeDamageName : typeData.keySet()) {
+                    movesDamage.put(typeDamageName, typeData.getInt(typeDamageName));
+                }
+                moves.put(typeName, movesDamage);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return moves;
+    }
 }

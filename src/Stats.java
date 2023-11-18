@@ -73,4 +73,12 @@ public class Stats {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+
+    public boolean decreaseHealtPoints(double damage) {
+        this.healthPoints = (int) (this.healthPoints - damage);
+        if (healthPoints <= 0) {
+            return true;
+        }
+        return false;
+    }
 }

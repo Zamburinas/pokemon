@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -9,7 +10,7 @@ public class PokemonGame {
         Scanner scanner = new Scanner(System.in);
 
         List<Pokemon> availablePokemons = PokemonDataReader.createAvailablePokemons("../data/Pokemons.json");
-        // int [][] typeTable = createTypesTable();
+        Map<String, Map<String,Integer>> typeTable = PokemonDataReader.createTypeTable("../data/TypesTable.json");
         if (availablePokemons != null) {
             int choice;
             do {
@@ -24,11 +25,11 @@ public class PokemonGame {
                 choice = scanner.nextInt();
                 switch (choice) {
                     case 1:
-                        System.out.println("Your Pokémon Team:");
+                        System.out.println("Your Pok\u00E9mon Team:");
                         player.showTeam();
                         break;
                     case 2:
-                        System.out.println("Choose Pokémon to add to your team (enter index, 0 to finish):");
+                        System.out.println("Choose Pok\u00E9mon to add to your team (enter index, 0 to finish):");
                         for (int i = 0; i < availablePokemons.size(); i++) {
                             System.out.println((i + 1) + ". " + availablePokemons.get(i).getName());
                         }
@@ -46,7 +47,7 @@ public class PokemonGame {
                         } while (index != 0);
                         break;
                     case 3:
-                        System.out.print("Enter the index of the Pokémon to remove: ");
+                        System.out.print("Enter the index of the Pok\u00E9mon to remove: ");
                         int indexToRemove = scanner.nextInt();
                         player.removePokemonFromTeam(indexToRemove - 1); // Adjust index for 0-based list
                         break;
@@ -59,7 +60,7 @@ public class PokemonGame {
                             IA.addPokemonToTeam(randomPokemon);
                         }
                         System.out.println("Initiating combat...");
-                        Battle battle = new Battle(player, IA);
+                        Battle battle = new Battle(player, IA, typeTable);
                         battle.start();
                         break;
                     case 5:
@@ -71,7 +72,7 @@ public class PokemonGame {
                 }
             } while (choice != 5);
         } else {
-            System.out.println("Failed to read Pokémon data.");
+            System.out.println("Failed to read Pok\u00E9mon data.");
         }
 
         scanner.close();
