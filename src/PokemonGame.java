@@ -7,12 +7,8 @@ public class PokemonGame {
         Player player = new Player("Ash");
         Scanner scanner = new Scanner(System.in);
 
-        //PokemonDataReader dataReader = new PokemonDataReader();
-        //List<Pokemon> availablePokemons = dataReader.readPokemonsFromJson("../data/Pokemons.json");
-
-
         List<Pokemon> availablePokemons = createAvailablePokemons();
-
+        int [][] typeTable = createTypesTable();
         if (availablePokemons != null) {
             int choice;
             do {
@@ -76,6 +72,9 @@ public class PokemonGame {
 
     }
     private static List<Pokemon> createAvailablePokemons() {
+        PokemonDataReader dataReader = new PokemonDataReader();
+        List<Pokemon> availablePokemons = dataReader.readPokemonsFromJson("../data/Pokemons.json");
+        List<Move> availabeMoves = dataReader.readMovementsFromJson("../data/Movements.json");
         List<Pokemon> pokemons = new ArrayList<>();
 
         // Charizard
@@ -113,5 +112,7 @@ public class PokemonGame {
         return pokemons;
     }
     
+    private static int[][] createTypesTable() {
+    }
 
 }
