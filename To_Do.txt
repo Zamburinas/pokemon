@@ -1,1 +1,7 @@
-JSON for the all Status, even if they are not going to be implemented at the begining, trying to explain which are the effects of each one.
+->> JSON for the all Status, even if they are not going to be implemented at the begining, trying to explain which are the effects of each one.
+->> Cuano un pokemon muera cambiar pokemon y poder atacar
+->> Mejorar el como detetar que hay cambio
+->> Jugar alguna partida para ver que todo funcionar correctamente
+->> Mostar rango de velocidad rival (Pestaña ver info rival y pokemon actual)
+->> Robustez ante la selccion de opcion
+->> Poder ir hacia atrás en el menú

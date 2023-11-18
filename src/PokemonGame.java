@@ -10,7 +10,7 @@ public class PokemonGame {
         Scanner scanner = new Scanner(System.in);
 
         List<Pokemon> availablePokemons = PokemonDataReader.createAvailablePokemons("../data/Pokemons.json");
-        Map<String, Map<String,Integer>> typeTable = PokemonDataReader.createTypeTable("../data/TypesTable.json");
+        Map<String, Map<String,Double>> typeTable = PokemonDataReader.createTypeTable("../data/TypesTable.json");
         if (availablePokemons != null) {
             int choice;
             do {

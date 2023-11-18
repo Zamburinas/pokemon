@@ -8,9 +8,9 @@ public class Battle {
     private Player player1;
     private Player player2;
     private int turnCounter = 0;
-    private Map<String, Map<String,Integer>> typeTable;
+    private Map<String, Map<String,Double>> typeTable;
 
-    public Battle(Player player1, Player player2, Map<String, Map<String,Integer>> typeTable) {
+    public Battle(Player player1, Player player2, Map<String, Map<String,Double>> typeTable) {
         this.player1 = player1;
         this.player2 = player2;
         this.typeTable = typeTable;
@@ -94,34 +94,38 @@ public class Battle {
             }
             
             int switchIndex;
-             do{
+            do{
                 switchIndex = scanner.nextInt();
                 condition = !(switchIndex > 0 && switchIndex <= player1.getTeam().size());
                 if (condition) 
                     logMessage("Invalid Pok\u00E9mon index. Please choose a valid Pok\u00E9mon.");
             } while(condition);
-                Pokemon selectedPokemon = player1.getPokemonFromTeam(switchIndex - 1);
-                player1.setCurrentPokemon(selectedPokemon);
-                logMessage(player1.getPlayerName() + " switched to " + selectedPokemon.getName() + "!");
+            Pokemon selectedPokemon = player1.getPokemonFromTeam(switchIndex - 1);
+            player1.setCurrentPokemon(selectedPokemon);
+            logMessage(player1.getPlayerName() + " switched to " + selectedPokemon.getName() + "!");
         }
 
         
         selectedMove2 = new Random().nextInt(player2.getCurrentPokemon().getMoves().length);
-
+        logMessage("meow" + selectedMove2);
         resolveTurn(player1.getCurrentPokemon(), player2.getCurrentPokemon(), selectedMove1, selectedMove2);
     }
 
     private void resolveTurn(Pokemon pokemonPlayer1, Pokemon pokemonPlayer2, int move1, int move2) {
+        // Borth want To change
+        if (move1 == -1 && move2 == -1) {
+            return;
+        }
         // First we check who is faster
         // If they're equally fast, it will be random with 1/2 probability
         Pokemon fasterPokemon = pokemonPlayer1, slowerPokemon = pokemonPlayer2;
         int fastMove = move1, slowMove = move2;
         Move move;
-        if (pokemonPlayer2.getSpeed() > pokemonPlayer1.getSpeed() || (pokemonPlayer2.getSpeed() == pokemonPlayer1.getSpeed() && new Random().nextDouble() >= 0.5)) {
+        if (pokemonPlayer2.getSpeed() > pokemonPlayer1.getSpeed() || (pokemonPlayer2.getSpeed() == pokemonPlayer1.getSpeed() && new Random().nextDouble() >= 0.5) || move1 == -1) {
             fasterPokemon = pokemonPlayer2;
             slowerPokemon = pokemonPlayer1;
-            fastMove = move1;
-            slowMove = move2;
+            fastMove = move2;
+            slowMove = move1;
         }
         move = fasterPokemon.useMove(fastMove);
         double damage = calculateDamage(fasterPokemon, slowerPokemon, move);
@@ -132,8 +136,11 @@ public class Battle {
             logMessage(slowerPokemon.getName() + " fainted!");
             return;
         }
+        if (slowMove == -1) {
+            return;
+        }
         move = slowerPokemon.useMove(slowMove);
-        damage = calculateDamage(slowerPokemon, fasterPokemon, slowerPokemon.useMove(slowMove));
+        damage = calculateDamage(slowerPokemon, fasterPokemon, move);
         logMessage(slowerPokemon.getName() + " used " + move.getName() + " dealing " + damage + " damage to " + fasterPokemon.getName());
         if (fasterPokemon.receiveDamage(damage)) {
             fasterPokemon.die();
@@ -146,12 +153,12 @@ public class Battle {
     private double calculateDamage(Pokemon attacker, Pokemon defender, Move move) {
         double probabilityCritical = 0.0625;
         double stab = (1 + booleanToInt(0.5, attacker.isType(move.getType())));
-        double critical = new Random().nextDouble() < probabilityCritical ? 2 : 1;
+        double critical = new Random().nextDouble() < probabilityCritical ? 2.0 : 1.0;
         double randomDamage = 0.85 + (1.0 - 0.85) * (new Random().nextDouble());
         double typeDamage = (typeTable.get(move.getType()).get(defender.getPrimaryType()));
         if (defender.getSecondaryType() != null)
             typeDamage *= typeTable.get(move.getType()).get(defender.getSecondaryType());
-        double modifier = critical * stab * critical * randomDamage * typeDamage;
+        double modifier = stab * critical * randomDamage * typeDamage;
         double attack = (double) attacker.getAttack(move.getCategory());
         double defense = (double) defender.getDefense(move.getCategory());
         double normalDamage = (((2*attacker.getLevel() + 10) / 250.0) * (attack/defense)*move.getPower() + 2);
@@ -165,7 +172,7 @@ public class Battle {
         if (condition) {
             return ifTrueValue;
         }
-        return 0;
+        return 0.0;
     }
 
     private boolean isBattleOver() {
