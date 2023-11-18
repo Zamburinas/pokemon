@@ -1,9 +1,11 @@
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class PokemonGame {
     public static void main(String[] args) {
         Player player = new Player("Ash");
+        Player IA = new Player("IA");
         Scanner scanner = new Scanner(System.in);
 
         List<Pokemon> availablePokemons = PokemonDataReader.createAvailablePokemons("../data/Pokemons.json");
@@ -49,8 +51,16 @@ public class PokemonGame {
                         player.removePokemonFromTeam(indexToRemove - 1); // Adjust index for 0-based list
                         break;
                     case 4:
+                        //before combat, create IA Pokemon team
+                        Random random = new Random();
+                        for (int i = 0; i < 3; i++) {
+                            int randomIndex = random.nextInt(availablePokemons.size());
+                            Pokemon randomPokemon = availablePokemons.get(randomIndex);
+                            IA.addPokemonToTeam(randomPokemon);
+                        }
                         System.out.println("Initiating combat...");
-                        
+                        Battle battle = new Battle(player, IA);
+                        battle.start();
                         break;
                     case 5:
                         System.out.println("Exiting the game. Goodbye!");

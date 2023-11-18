@@ -4,6 +4,7 @@ import java.util.List;
 public class Player {
     private String playerName;
     private List<Pokemon> team; // 3 pokemon max
+    private Pokemon currentPokemon;
 
     public Player(String playerName) {
         this.playerName = playerName;
@@ -52,5 +53,13 @@ public class Player {
 
     public List<Pokemon> getTeam() {
         return team;
+    }
+
+    public Pokemon getCurrentPokemon() {
+        return currentPokemon;
+    }
+
+    public void setCurrentPokemon(Pokemon currentPokemon) {
+        this.currentPokemon = currentPokemon;
     }
 }

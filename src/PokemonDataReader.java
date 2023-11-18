@@ -43,8 +43,7 @@ public class PokemonDataReader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        List<Pokemon> meow = new ArrayList<Pokemon>();
-        return meow;
+        return pokemonList;
     }
     public static Map<String, Move> createMovements(String filePath) {
         Map<String, Move> moves = new HashMap<>();
