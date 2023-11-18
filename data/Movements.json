@@ -21,7 +21,7 @@
         "Type":"Flying",
         "Category":"Special",
         "PP":10,
-        "Passive":{"Probability": 10, "Effect": "Confused", "Modifier":{"User":"Enemy","Stat":"","Value":""}}
+        "Passive":{"Probability": 10, "Effect": "Confused", "Modifier":{"User":"Enemy"    }}
     },
     "Earthquake":{
         "Power":100,
@@ -29,7 +29,7 @@
         "Type":"Ground",
         "Category":"Physical",
         "PP":10,
-        "Passive":{"Probability": 0, "Effect": "", "Modifier":""}
+        "Passive":{"Probability": 0 }
     },
     "Sludge Bomb":{
         "Power":90,
@@ -37,7 +37,7 @@
         "Type":"Poison",
         "Category":"Special",
         "PP":10,
-        "Passive":{"Probability": 30, "Effect": "Poison", "Modifier":{"User":"Enemy","Stat":"healthPoints","Value":""}}
+        "Passive":{"Probability": 30, "Effect": "Poison", "Modifier":{"User":"Enemy","Stat":"healthPoints"  }}
     },
     "Power Whip":{
         "Power":120,
@@ -45,7 +45,7 @@
         "Type":"Grass",
         "Category":"Special",
         "PP":15,
-        "Passive":{"Probability": 0, "Effect": "", "Modifier":""}
+        "Passive":{"Probability": 0 }
     },
     "Syntesis":{
         "Power":0,
@@ -61,7 +61,7 @@
         "Type":"Water",
         "Category":"Special",
         "PP":5,
-        "Passive":{"Probability": 0, "Effect": "", "Modifier":""}
+        "Passive":{"Probability": 0 }
     },
     "Surf":{
         "Power":90,
@@ -69,7 +69,7 @@
         "Type":"Water",
         "Category":"Special",
         "PP":15,
-        "Passive":{"Probability": 0, "Effect": "", "Modifier":""}
+        "Passive":{"Probability": 0 }
     },
     "Ice Punch":{
         "Power":75,
@@ -77,7 +77,7 @@
         "Type":"Ice",
         "Category":"Physical",
         "PP":15,
-        "Passive":{"Probability": 10, "Effect": "Freeze", "Modifier":{"User":"Enemy","Stat":"","Value":""}}
+        "Passive":{"Probability": 10, "Effect": "Freeze", "Modifier":{"User":"Enemy"}}
     },
     "Headbutt":{
         "Power":70,
@@ -85,7 +85,7 @@
         "Type":"Normal",
         "Category":"Physical",
         "PP":15,
-        "Passive":{"Probability": 30, "Effect": "Flinch", "Modifier":{"User":"Enemy","Stat":"","Value":""}}
+        "Passive":{"Probability": 30, "Effect": "Flinch", "Modifier":{"User":"Enemy"}}
     },
     "Hyper Beam":{
         "Power":150,
@@ -93,7 +93,7 @@
         "Type":"Normal",
         "Category":"Special",
         "PP":5,
-        "Passive":{"Probability": 100, "Effect": "Recharge", "Modifier":{"User":"Own","Stat":"","Value":""}}
+        "Passive":{"Probability": 100, "Effect": "Recharge", "Modifier":{"User":"Own" }}
     },
     "Soft Boiled":{
         "Power":0,
@@ -125,7 +125,7 @@
         "Type":"Psychic",
         "Category":"Physical",
         "PP":15,
-        "Passive":{"Probability": 20, "Effect": "Flinch", "Modifier":{"User":"Enemy","Stat":"","Value":""}}
+        "Passive":{"Probability": 20, "Effect": "Flinch", "Modifier":{"User":"Enemy"}}
     },
     "Submission":{
         "Power":80,
@@ -133,7 +133,7 @@
         "Type":"Fighting",
         "Category":"Physical",
         "PP":15,
-        "Passive":{"Probability": 20, "Effect": "Flinch", "Modifier":{"User":"Enemy","Stat":"","Value":""}}
+        "Passive":{"Probability": 20, "Effect": "Flinch", "Modifier":{"User":"Enemy"}}
     },
     "Rock Slide":{
         "Power":75,
@@ -141,7 +141,7 @@
         "Type":"Rock",
         "Category":"Physical",
         "PP":15,
-        "Passive":{"Probability": 30, "Effect": "Flinch", "Modifier":{"User":"Enemy","Stat":"","Value":""}}
+        "Passive":{"Probability": 30, "Effect": "Flinch", "Modifier":{"User":"Enemy"}}
     },
     "Brick Break":{
         "Power":75,
@@ -149,7 +149,7 @@
         "Type":"Fighting",
         "Category":"Physical",
         "PP":15,
-        "Passive":{"Probability": 0, "Effect": "", "Modifier":""}
+        "Passive":{"Probability": 0 }
     },
     "Body Slam":{
         "Power":85,
@@ -165,7 +165,7 @@
         "Type":"Ghost",
         "Category":"Special",
         "PP":15,
-        "Passive":{"Probability": 20, "Effect": "", "Modifier":{"User":"Enemy","Stat":"SpecialDefense","Value":0.8}}
+        "Passive":{"Probability": 20,   "Modifier":{"User":"Enemy","Stat":"SpecialDefense","Value":0.8}}
     },
     "Psychic":{
         "Power":90,
@@ -173,7 +173,7 @@
         "Type":"Psychic",
         "Category":"Special",
         "PP":15,
-        "Passive":{"Probability": 10, "Effect": "", "Modifier":{"User":"Enemy","Stat":"SpecialDefense","Value":0.9}}
+        "Passive":{"Probability": 10,   "Modifier":{"User":"Enemy","Stat":"SpecialDefense","Value":0.9}}
     },
     "Blizzard":{
         "Power":110,
@@ -181,7 +181,7 @@
         "Type":"Ice",
         "Category":"Special",
         "PP":5,
-        "Passive":{"Probability": 10, "Effect": "Freeze", "Modifier":{"User":"Enemy","Stat":"","Value":""}}
+        "Passive":{"Probability": 10, "Effect": "Freeze", "Modifier":{"User":"Enemy"}}
     },
     "Megahorn":{
         "Power":120,
@@ -189,7 +189,7 @@
         "Type":"Bug",
         "Category":"Physical",
         "PP":10,
-        "Passive":{"Probability": 0, "Effect": "", "Modifier":""}
+        "Passive":{"Probability": 0 }
     },
     "Explosion":{
         "Power":250,
@@ -197,7 +197,7 @@
         "Type":"Normal",
         "Category":"Physical",
         "PP":5,
-        "Passive":{"Probability": 100, "Effect": "", "Modifier":{"User":"Own","Stat":"healthPoints","Value":0}}
+        "Passive":{"Probability": 100,   "Modifier":{"User":"Own","Stat":"healthPoints","Value":0}}
     },
     "X-Scissor":{
         "Power":80,
@@ -205,7 +205,7 @@
         "Type":"Bug",
         "Category":"Physical",
         "PP":15,
-        "Passive":{"Probability": 0, "Effect": "", "Modifier":""}
+        "Passive":{"Probability": 0 }
     },
     "Stone Edge":{
         "Power":100,
@@ -213,6 +213,6 @@
         "Type":"Rock",
         "Category":"Physical",
         "PP":5,
-        "Passive":{"Probability": 0, "Effect": "", "Modifier":""}
+        "Passive":{"Probability": 0 }
     } 
 }
