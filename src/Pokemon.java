@@ -62,4 +62,8 @@ public class Pokemon {
     public String getSecondaryType() {
         return this.secondaryType;
     }
+
+    public void addSecondaryType(String secondaryType) {
+        this.secondaryType = secondaryType;
+    }
 }
