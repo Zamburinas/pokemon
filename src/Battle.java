@@ -10,10 +10,10 @@ public class Battle {
     private int turnCounter = 0;
     private Map<String, Map<String,Double>> typeTable;
 
-    public Battle(Player player1, Player player2, Map<String, Map<String, Double>> typeTable2) {
+    public Battle(Player player1, Player player2, Map<String, Map<String, Double>> typeTable) {
         this.player1 = player1;
         this.player2 = player2;
-        this.typeTable = typeTable2;
+        this.typeTable = typeTable;
     }
 
     public void start() {
@@ -27,10 +27,9 @@ public class Battle {
         logMessage(player1.getPlayerName() + " sends out " + player1.getCurrentPokemon().getName() + " to the field!");
         logMessage(player2.getPlayerName() + " sends out " + player2.getCurrentPokemon().getName() + " to the field!");
         
-        while (true) {
+        while (victoria == 0) {
             playerTurn();
             victoria=isBattleOver();
-            if (victoria!=0) break; // Verificar si la batalla ha terminado antes del segundo turno
         }
 
         if (victoria==1) {
@@ -48,64 +47,61 @@ public class Battle {
         turnCounter++;
         logMessage("Turn: " + turnCounter);
         while(player2.getCurrentPokemon().isDead()) player2.setPokemonFromTeam(new Random().nextInt(3));
-        logMessage("AI Pokémon: " + player2.getCurrentPokemon().getName() + " HP: " + player2.getCurrentPokemon().getStats().getHealthPoints());
+        logMessage("AI Pok\u00E9mon: " + player2.getCurrentPokemon().getName() + " HP: " + player2.getCurrentPokemon().getStats().getHealthPoints());
         int selectedMove1 = -1, selectedMove2 = -1;
         boolean pokemonSwitched = false;
         Pokemon player1Pokemon = player1.getCurrentPokemon();
         
         Scanner scanner;
         do {
-            // Display details of the current Pokémon and its available moves
-            logMessage("Current Pokémon: " + player1Pokemon.getName());
+            // Display details of the current Pok\u00E9mon and its available moves
+            logMessage("Current Pok\u00E9mon: " + player1Pokemon.getName());
             logMessage("HP: " + player1Pokemon.getStats().getHealthPoints());        
     
             logMessage("Choose an action:");
             logMessage("1. Attack with a move");            
-            logMessage("2. Change Pokémon");
+            logMessage("2. Change Pok\u00E9mon");
     
             scanner = new Scanner(System.in);
             int choice = scanner.nextInt();
+            switch(choice) {
+                case 1:
+                        // Player wants to attack with a move
+                        logMessage("Choose a move (enter move index):");
+                        logMessage("Available moves:");
+                        logMessage("0. Go back");
+                        Move[] moves = player1.getCurrentPokemon().getMoves();
+                        for (int i = 0; i < moves.length; i++) {
+                            if (player1Pokemon.isMoveAvailable(i)) {
+                                logMessage((i + 1) + ". " + player1Pokemon.getMoves()[i].getInfo(), false);
+                                logMessage(player1Pokemon.getMoves()[i].getMoveStats());
+                            }
+                        }
+                        
+                        int moveIndex;
+                        do {
+                            moveIndex = scanner.nextInt();
+                            if (moveIndex == 0) {
+                                break;
+                            }
+                            if (!(moveIndex > 0 && moveIndex <= player1Pokemon.getMoves().length) || !player1Pokemon.isMoveAvailable(moveIndex - 1)) {
+                                logMessage("Invalid move index. Please choose a valid move.");
+                            }
+                        } while (!(moveIndex > 0 && moveIndex <= player1Pokemon.getMoves().length) || !player1Pokemon.isMoveAvailable(moveIndex - 1));
             
-            if (choice == 1) {
-                // Player wants to attack with a move
-                logMessage("Choose a move (enter move index):");
-                logMessage("Available moves:");
-                logMessage("0. Go back");
-                Move[] moves = player1.getCurrentPokemon().getMoves();
-                for (int i = 0; i < moves.length; i++) {
-                    if (player1Pokemon.isMoveAvailable(i)) {
-                        logMessage((i + 1) + ". " + player1Pokemon.getMoves()[i].getInfo(), false);
-                        logMessage(player1Pokemon.getMoves()[i].getMoveStats());
-                    }
-                }
-                
-                int moveIndex;
-                do {
-                    moveIndex = scanner.nextInt();
-                    if (moveIndex == 0) {
-                        break; // Go back to the action menu
-                    }
-                    if (!(moveIndex > 0 && moveIndex <= player1Pokemon.getMoves().length) || !player1Pokemon.isMoveAvailable(moveIndex - 1)) {
-                        logMessage("Invalid move index. Please choose a valid move.");
-                    }
-                } while (!(moveIndex > 0 && moveIndex <= player1Pokemon.getMoves().length) || !player1Pokemon.isMoveAvailable(moveIndex - 1));
-    
-                if (moveIndex != 0) {
-                    selectedMove1 = moveIndex - 1;
-                }
-            } else if (choice == 2) {
-                // Player wants to change Pokémon
-                logMessage("Choose a Pokémon to switch to (enter Pokémon index or 0 to go back):");
-                pokemonSwitched = selectPokemonForPlayer(player1);
-
-            } else {
-                logMessage("Invalid choice. Please choose again.");
+                        if (moveIndex != 0) {
+                            selectedMove1 = moveIndex - 1;
+                        }
+                        break;
+                case 2:
+                        // Player wants to change Pok\u00E9mon
+                        logMessage("Choose a Pok\u00E9mon to switch to (enter Pok\u00E9mon index or 0 to go back):");
+                        pokemonSwitched = selectPokemonForPlayer(player1);
+                        break;
+                default:
+                        logMessage("Invalid choice. Please choose again.");
             }
-            
-            if (selectedMove1 != -1 || pokemonSwitched) {
-                break; // Exit loop if a move is selected or pokemon is changed
-            }
-        } while (true);
+        } while (!(selectedMove1 != -1 || pokemonSwitched));
     
         
 
@@ -163,16 +159,16 @@ public class Battle {
     private double calculateDamage(Pokemon attacker, Pokemon defender, Move move) {
         double probabilityCritical = 0.0625;
         double stab = (1 + booleanToInt(0.5, attacker.isType(move.getType())));
-        double critical = new Random().nextDouble() < probabilityCritical ? 2 : 1;
+        double critical = new Random().nextDouble() < probabilityCritical ? 2.0 : 1.0;
         double randomDamage = 0.85 + (1.0 - 0.85) * (new Random().nextDouble());
         double typeDamage = (typeTable.get(move.getType()).get(defender.getPrimaryType()));
         if (defender.getSecondaryType() != null)
             typeDamage *= typeTable.get(move.getType()).get(defender.getSecondaryType());
-        double modifier = critical * stab * critical * randomDamage * typeDamage;
+        double modifier = stab * critical * randomDamage * typeDamage;
         double attack = (double) attacker.getAttack(move.getCategory());
         double defense = (double) defender.getDefense(move.getCategory());
         double normalDamage = (((2*attacker.getLevel() + 10) / 250.0) * (attack/defense)*move.getPower() + 2);
-        if (critical == 2) {
+        if (critical == 2 && modifier != 0) {
             logMessage("Critical Damage!");
         }
         return normalDamage * modifier;
@@ -220,43 +216,43 @@ public class Battle {
         boolean switched = false;
     
         do {
-            logMessage(player.getPlayerName() + ", choose your Pokémon:");
+            logMessage(player.getPlayerName() + ", choose your Pok\u00E9mon:");
             List<Pokemon> availablePokemon = new ArrayList<>();
     
-            // Filter and display only Pokémon with remaining health points
+            // Filter and display only Pok\u00E9mon with remaining health points
             for (Pokemon pokemon : player.getTeam()) {
-                if (!pokemon.isDead()) {
+                if (!pokemon.isDead() && !pokemon.isEqualTo(player.getCurrentPokemon())) {
                     availablePokemon.add(pokemon);
                 }
             }
     
             if (availablePokemon.isEmpty()) {
-                logMessage("No Pokémon with remaining health points available!");
-                return switched; // Exit method if no Pokémon are available
+                logMessage("No Pok\u00E9mon with remaining health points available!");
+                return switched; // Exit method if no Pok\u00E9mon are available
             }
     
             for (int i = 0; i < availablePokemon.size(); i++) {
                 logMessage((i + 1) + ". " + availablePokemon.get(i).getName());
             }
     
-            System.out.print("Enter the index of your Pokémon (enter 0 to cancel): ");
+            logMessage("Enter the index of your Pok\u00E9mon (enter 0 to cancel): ");
             int chosenIndex = scanner.nextInt();
     
             if (chosenIndex == 0) {
                 return switched; // Exit method if the player selects 0
             }
     
-            if (chosenIndex > 0 && chosenIndex <= availablePokemon.size()) {
+            if (chosenIndex > 0 && chosenIndex <= availablePokemon.size() && !availablePokemon.get(chosenIndex - 1).isEqualTo(player.getCurrentPokemon()) && !availablePokemon.get(chosenIndex - 1).isDead()) {
                 Pokemon chosenPokemon = availablePokemon.get(chosenIndex - 1);
                 logMessage(player.getPlayerName() + " has chosen " + chosenPokemon.getName() + "!");
                 player.setCurrentPokemon(chosenPokemon);
                 switched = true;
                 validSelection = true; // Set to true to exit the loop
             } else {
-                logMessage("Invalid index. Please choose a valid Pokémon.");
-                // Ask for Pokémon selection again
+                logMessage("Invalid index. Please choose a valid Pok\u00E9mon.");
+                // Ask for Pok\u00E9mon selection again
             }
-        } while (!validSelection); // Repeat until a valid Pokémon index is chosen
+        } while (!validSelection); // Repeat until a valid Pok\u00E9mon index is chosen
     
         return switched;
     }
