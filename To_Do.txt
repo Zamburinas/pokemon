@@ -2,3 +2,7 @@
 ->> Mejorar el como detetar que hay cambio
 ->> Jugar alguna partida para ver que todo funcionar correctamente
 ->> Mostar rango de velocidad rival (Pestaña ver info rival y pokemon actual)
+
+Bugs:
+->> Un golpe que no ha hecho daño ( rayo a tipo tierra) puede ser critico.
+->> 
