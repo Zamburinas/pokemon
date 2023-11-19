@@ -47,9 +47,17 @@ public class PokemonGame {
                         } while (index != 0);
                         break;
                     case 3:
-                        System.out.print("Enter the index of the Pok\u00E9mon to remove: ");
-                        int indexToRemove = scanner.nextInt();
-                        player.removePokemonFromTeam(indexToRemove - 1); // Adjust index for 0-based list
+                        System.out.print("Enter the index of the Pokémon to remove(enter index, 0 to finish): ");
+                        int indexToRemove;
+                        do {
+                            indexToRemove = scanner.nextInt();
+                            if (indexToRemove > 0 && indexToRemove <= player.getTeam().size()) {
+                                player.removePokemonFromTeam(indexToRemove - 1);
+                                System.out.println("Pokémon removed from your team!");
+                            } else if (indexToRemove != 0) {
+                                System.out.println("Invalid index. Please choose again or enter 0 to finish.");
+                            }
+                        } while (indexToRemove != 0);
                         break;
                     case 4:
                         //before combat, create IA Pokemon team
@@ -62,6 +70,7 @@ public class PokemonGame {
                         System.out.println("Initiating combat...");
                         Battle battle = new Battle(player, IA, typeTable);
                         battle.start();
+                        choice = 5;
                         break;
                     case 5:
                         System.out.println("Exiting the game. Goodbye!");
