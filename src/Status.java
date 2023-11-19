@@ -11,6 +11,13 @@ public class Status {
         this.affectedStat = affectedStat;
     }
 
+    public Status (Status status) {
+        this.remainingTurns = status.getRemainingTurns();
+        this.name = status.getName();
+        this.probability = status.getProbability();
+        this.affectedStat = status.getAffectedStat();
+    }
+    
     public int getRemainingTurns() {
         return this.remainingTurns;
     }

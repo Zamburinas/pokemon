@@ -13,7 +13,7 @@ public class Player {
 
     public boolean addPokemonToTeam(Pokemon pokemon) {
         if (team.size() < 3) {
-            team.add(pokemon);
+            team.add(new Pokemon(pokemon));
             System.out.println(pokemon.getName() + " was added to " + playerName + "'s team");
             return true;
         } else {

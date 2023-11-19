@@ -17,6 +17,16 @@ public class Move {
         this.totalRemaining = this.remaining;
     }
 
+    public Move (Move move) {
+        this.name = move.getName();
+        this.type = move.getType();
+        this.power = move.getPower();
+        this.remaining = move.getRemaining();
+        this.accuracy = move.getAccuracy();
+        this.category = move.getCategory();
+        this.totalRemaining = move.getTotalRemaining();
+    }
+
     public String getName() {
         return this.name;
     }

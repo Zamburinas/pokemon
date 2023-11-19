@@ -22,6 +22,20 @@ public class Pokemon {
         this.secondaryType = secondaryType;
         this.stats = new Stats(level, healthPoints, attack, defense, special, specialDefense, speed);
         this.moves = new Move[4];
+        this.status = new Status("normal", -1, 100, null);
+    }
+
+    public Pokemon(Pokemon pokemon){
+        this.name = pokemon.getName();
+        this.primaryType = pokemon.getPrimaryType();
+        this.secondaryType = pokemon.getSecondaryType();
+        this.stats = new Stats(pokemon.getStats());
+        this.status = new Status(pokemon.getStatus());
+        this.moves = new Move[4];
+        Move [] copyMoves = pokemon.getMoves();
+        for (int i = 0; i < 4; i++) {
+            this.moves[i] = new Move(copyMoves[i]);
+        }
     }
 
     public Pokemon() {

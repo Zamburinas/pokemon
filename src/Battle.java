@@ -9,6 +9,7 @@ public class Battle {
     private Player player2;
     private int turnCounter = 0;
     private Map<String, Map<String,Double>> typeTable;
+    private static final int pokemonChange = -1;
 
     public Battle(Player player1, Player player2, Map<String, Map<String, Double>> typeTable) {
         this.player1 = player1;
@@ -29,12 +30,12 @@ public class Battle {
         
         while (victoria == 0) {
             playerTurn();
-            victoria=isBattleOver();
+            victoria = isBattleOver();
         }
 
-        if (victoria==1) {
+        if (victoria == 1) {
             logMessage(player1.getPlayerName() + " wins!");
-        } else if (victoria==2) {
+        } else if (victoria == 2) {
             logMessage(player2.getPlayerName() + " wins!");
         } else {
             logMessage("Draw!");
@@ -48,7 +49,7 @@ public class Battle {
         logMessage("Turn: " + turnCounter);
         while(player2.getCurrentPokemon().isDead()) player2.setPokemonFromTeam(new Random().nextInt(3));
         logMessage("AI Pok\u00E9mon: " + player2.getCurrentPokemon().getName() + " HP: " + player2.getCurrentPokemon().getStats().getHealthPoints());
-        int selectedMove1 = -1, selectedMove2 = -1;
+        int selectedMove1 = pokemonChange, selectedMove2 = pokemonChange;
         boolean pokemonSwitched = false;
         Pokemon player1Pokemon = player1.getCurrentPokemon();
         
@@ -116,8 +117,8 @@ public class Battle {
     
 
     private void resolveTurn(Pokemon pokemonPlayer1, Pokemon pokemonPlayer2, int move1, int move2) {
-        // Borth want To change
-        if (move1 == -1 && move2 == -1) {
+        // Both want To change
+        if (move1 == pokemonChange && move2 == pokemonChange) {
             return;
         }
         // First we check who is faster
@@ -125,7 +126,7 @@ public class Battle {
         Pokemon fasterPokemon = pokemonPlayer1, slowerPokemon = pokemonPlayer2;
         int fastMove = move1, slowMove = move2;
         Move move;
-        if (pokemonPlayer2.getSpeed() > pokemonPlayer1.getSpeed() || (pokemonPlayer2.getSpeed() == pokemonPlayer1.getSpeed() && new Random().nextDouble() >= 0.5) || move1 == -1) {
+        if (pokemonPlayer2.getSpeed() > pokemonPlayer1.getSpeed() || (pokemonPlayer2.getSpeed() == pokemonPlayer1.getSpeed() && new Random().nextDouble() >= 0.5) || move1 == pokemonChange) {
             fasterPokemon = pokemonPlayer2;
             slowerPokemon = pokemonPlayer1;
             fastMove = move2;
@@ -140,7 +141,7 @@ public class Battle {
             logMessage(slowerPokemon.getName() + " fainted!");
             return;
         }
-        if (slowMove == -1) {
+        if (slowMove == pokemonChange) {
             return;
         }
         move = slowerPokemon.useMove(slowMove);

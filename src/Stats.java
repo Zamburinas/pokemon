@@ -18,6 +18,16 @@ public class Stats {
         this.speed = speed;
     }
 
+    public Stats (Stats stats) {
+        this.level = stats.getLevel();
+        this.healthPoints = stats.getHealthPoints();
+        this.attack = stats.getAttack();
+        this.specialDefense = stats.getSpecialDefense();
+        this.specialAttack = stats.getSpecialAttack();
+        this.defense = stats.getDefense();
+        this.speed = stats.getDefense();
+    }
+
     public int getLevel() {
         return this.level;
     }
