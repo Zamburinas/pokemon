@@ -114,7 +114,7 @@ public class Battle {
 
         if (player1.getCurrentPokemon().isDead()) {
             do {selectPokemonForPlayer(player1);
-            } while ((isBattleOver()==0) || player1.getCurrentPokemon().isDead());
+            } while ((isBattleOver()==0) && player1.getCurrentPokemon().isDead());
         }
     }
     

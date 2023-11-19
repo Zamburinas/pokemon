@@ -5,4 +5,4 @@
 
 Bugs:
 ->> Un golpe que no ha hecho daño ( rayo a tipo tierra) puede ser critico.
-->> 
+->> Permite cambiar al mismo pokemon que estamos usando
