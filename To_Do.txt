@@ -2,5 +2,6 @@
 ->> Mejorar el como detetar que hay cambio
 ->> Jugar alguna partida para ver que todo funcionar correctamente
 ->> Mostar rango de velocidad rival (Pestaña ver info rival y pokemon actual)
-->> AI y persona no puedan tener mismos pokemons
-->> Repartir aleatoriamente?
+
+Bugs:
+->> Las velocidades (Golem parece ser rapidisimo)

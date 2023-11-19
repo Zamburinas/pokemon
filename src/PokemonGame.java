@@ -18,8 +18,9 @@ public class PokemonGame {
                 System.out.println("1. Show Team");
                 System.out.println("2. Add Pokemon");
                 System.out.println("3. Remove Pokemon");
-                System.out.println("4. Combat");
-                System.out.println("5. Exit");
+                System.out.println("4. Random Team");
+                System.out.println("5. Combat");
+                System.out.println("6. Exit");
                 System.out.print("Choose an option: ");
 
                 choice = scanner.nextInt();
@@ -59,27 +60,46 @@ public class PokemonGame {
                             }
                         } while (indexToRemove != 0);
                         break;
+
                     case 4:
+                        System.out.println("Clearing current Pokémon team...");
+                        while (player.getTeam().size() > 0) {
+                            player.removePokemonFromTeam(0);
+                        }
+                        System.out.println("Current team cleared!");
+                    
+                        System.out.println("Creating a random Pokémon team for the player...");
+                        while (player.getTeam().size() < 3) {
+                            Random random = new Random();
+                            int randomIndex = random.nextInt(availablePokemons.size());
+                            Pokemon randomPokemon = availablePokemons.get(randomIndex);
+                            player.addPokemonToTeam(randomPokemon);
+                        }
+                        System.out.println("Random Pokémon team created!");
+                        break;
+                    
+                    case 5:
                         //before combat, create IA Pokemon team
-                        Random random = new Random();
-                        for (int i = 0; i < 3; i++) {
+                        while (IA.getTeam().size() < 3) {
+                            Random random = new Random();
                             int randomIndex = random.nextInt(availablePokemons.size());
                             Pokemon randomPokemon = availablePokemons.get(randomIndex);
                             IA.addPokemonToTeam(randomPokemon);
                         }
+                        
                         System.out.println("Initiating combat...");
                         Battle battle = new Battle(player, IA, typeTable);
                         battle.start();
                         choice = 5;
                         break;
-                    case 5:
+                    case 6:
                         System.out.println("Exiting the game. Goodbye!");
                         break;
                     default:
                         System.out.println("Invalid choice. Please choose again.");
                         break;
                 }
-            } while (choice != 5);
+            } while (choice != 6);
         } else {
             System.out.println("Failed to read Pok\u00E9mon data.");
         }

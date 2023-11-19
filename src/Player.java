@@ -13,14 +13,22 @@ public class Player {
 
     public boolean addPokemonToTeam(Pokemon pokemon) {
         if (team.size() < 3) {
-            team.add(new Pokemon(pokemon));
-            System.out.println(pokemon.getName() + " was added to " + playerName + "'s team");
-            return true;
+            boolean isAlreadyInTeam = team.stream().anyMatch(p -> p.getName().equals(pokemon.getName()));
+            if (!isAlreadyInTeam) {
+                team.add(new Pokemon(pokemon));
+                System.out.println(pokemon.getName() + " was added to " + playerName + "'s team");
+                return true;
+            } else {
+                System.out.println(pokemon.getName() + " is already in your team!");
+                return false;
+            }
         } else {
-            System.out.println("You team is full");
+            System.out.println("Your team is full");
             return false;
         }
     }
+    
+    
 
     public void setPokemonFromTeam(int index) {
         if (index >= 0 && index < team.size()) {
