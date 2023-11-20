@@ -77,7 +77,7 @@
         "specialdefense": 204,
         "primaryType": "Ghost",
         "secondaryType": "Poison",
-        "movements": ["Sludge Bomb", "Shadow Ball", "Thunderbolt", "Spychic"]
+        "movements": ["Sludge Bomb", "Shadow Ball", "Thunderbolt", "Psychic"]
     },
     "Mewtwo": {
         "level":100,

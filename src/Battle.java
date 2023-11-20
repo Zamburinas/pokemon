@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
@@ -113,6 +114,7 @@ public class Battle {
             do {selectPokemonForPlayer(player1);
             } while ((isBattleOver()==0) && player1.getCurrentPokemon().isDead());
         }
+        // scanner.close();
     }
     
 
@@ -134,8 +136,8 @@ public class Battle {
         }
         move = fasterPokemon.useMove(fastMove);
         double damage = calculateDamage(fasterPokemon, slowerPokemon, move);
-        
-        logMessage(fasterPokemon.getName() + " used " + move.getName() + " dealing " + damage + " damage to " + slowerPokemon.getName());
+        double damageDone = damage <= slowerPokemon.remainingHealth() ? (damage * 100.0) / slowerPokemon.getMaxHealthPoints() : (slowerPokemon.remainingHealth() * 100.0) / slowerPokemon.getMaxHealthPoints();
+        logMessage(String.format(Locale.US, "%s used %s dealing %.2f %% damage to %s", fasterPokemon.getName(), move.getName(), damageDone, slowerPokemon.getName()));
         if (slowerPokemon.receiveDamage(damage)) {
             slowerPokemon.die();
             logMessage(slowerPokemon.getName() + " fainted!");
@@ -146,7 +148,8 @@ public class Battle {
         }
         move = slowerPokemon.useMove(slowMove);
         damage = calculateDamage(slowerPokemon, fasterPokemon, move);
-        logMessage(slowerPokemon.getName() + " used " + move.getName() + " dealing " + damage + " damage to " + fasterPokemon.getName());
+        damageDone = damage <= fasterPokemon.remainingHealth() ? (damage * 100.0) / fasterPokemon.getMaxHealthPoints() : (fasterPokemon.remainingHealth() * 100.0) / fasterPokemon.getMaxHealthPoints();
+        logMessage(String.format(Locale.US, "%s used %s dealing %.2f %% damage to %s", slowerPokemon.getName(), move.getName(), damageDone, fasterPokemon.getName()));
         if (fasterPokemon.receiveDamage(damage)) {
             fasterPokemon.die();
             logMessage(fasterPokemon.getName() + " fainted!");
@@ -168,7 +171,7 @@ public class Battle {
         double modifier = stab * critical * randomDamage * typeDamage;
         double attack = (double) attacker.getAttack(move.getCategory());
         double defense = (double) defender.getDefense(move.getCategory());
-        double normalDamage = (((2*attacker.getLevel() + 10) / 250.0) * (attack/defense)*move.getPower() + 2);
+        double normalDamage = (((2*attacker.getLevel() + 10) / 250.0) * (attack/defense)*move.getPower());
         if (critical == 2 && modifier != 0) {
             logMessage("Critical Damage!");
         }
@@ -254,7 +257,7 @@ public class Battle {
                 // Ask for Pok\u00E9mon selection again
             }
         } while (!validSelection); // Repeat until a valid Pok\u00E9mon index is chosen
-    
+        // scanner.close();
         return switched;
     }
     

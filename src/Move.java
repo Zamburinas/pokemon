@@ -66,4 +66,8 @@ public class Move {
     public String getMoveStats() {
         return "Type: " + this.type + " Category: " + this.category + " Power: " + this.power + " Accuracy: " + this.accuracy;
     }
+
+    public void addPassive() {
+
+    }
 }

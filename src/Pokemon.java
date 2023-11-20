@@ -141,4 +141,12 @@ public class Pokemon {
     public boolean isEqualTo(Pokemon pokemon) {
         return pokemon != null && this.name.equals(pokemon.getName());
     }
+
+    public int remainingHealth () {
+        return this.stats.getHealthPoints();
+    }
+
+    public int getMaxHealthPoints() {
+        return this.stats.getMaxHealthPoints();
+    }
 }
