@@ -49,7 +49,8 @@ public class Battle {
         turnCounter++;
         logMessage("Turn: " + turnCounter);
         while(player2.getCurrentPokemon().isDead()) player2.setPokemonFromTeam(new Random().nextInt(3));
-        logMessage("AI Pok\u00E9mon: " + player2.getCurrentPokemon().getName() + " HP: " + player2.getCurrentPokemon().getStats().getHealthPoints());
+        double healthPercentage2 = ((double) player2.getCurrentPokemon().getStats().getHealthPoints() / player2.getCurrentPokemon().getMaxHealthPoints()) * 100;
+        logMessage("AI Pokémon: " + player2.getCurrentPokemon().getName() + " (" + String.format("%.2f", healthPercentage2) + "% HP)");
         int selectedMove1 = pokemonChange, selectedMove2 = pokemonChange;
         boolean pokemonSwitched = false;
         Pokemon player1Pokemon = player1.getCurrentPokemon();
@@ -57,9 +58,8 @@ public class Battle {
         Scanner scanner;
         do {
             // Display details of the current Pok\u00E9mon and its available moves
-            logMessage("Current Pok\u00E9mon: " + player1Pokemon.getName());
-            logMessage("HP: " + player1Pokemon.getStats().getHealthPoints());        
-    
+            double healthPercentagePlayer1 = ((double) player1Pokemon.getStats().getHealthPoints() / player1Pokemon.getMaxHealthPoints()) * 100;
+            logMessage("Current Pokémon: " + player1Pokemon.getName() + " (" + String.format("%.2f", healthPercentagePlayer1) + "% HP)");                
             logMessage("Choose an action:");
             logMessage("1. Attack with a move");            
             logMessage("2. Change Pok\u00E9mon");
@@ -138,6 +138,7 @@ public class Battle {
         double damage = calculateDamage(fasterPokemon, slowerPokemon, move);
         double damageDone = damage <= slowerPokemon.remainingHealth() ? (damage * 100.0) / slowerPokemon.getMaxHealthPoints() : (slowerPokemon.remainingHealth() * 100.0) / slowerPokemon.getMaxHealthPoints();
         logMessage(String.format(Locale.US, "%s used %s dealing %.2f %% damage to %s", fasterPokemon.getName(), move.getName(), damageDone, slowerPokemon.getName()));
+        applyPassiveEffect(fasterPokemon, slowerPokemon, move);
         if (slowerPokemon.receiveDamage(damage)) {
             slowerPokemon.die();
             logMessage(slowerPokemon.getName() + " fainted!");
@@ -150,6 +151,7 @@ public class Battle {
         damage = calculateDamage(slowerPokemon, fasterPokemon, move);
         damageDone = damage <= fasterPokemon.remainingHealth() ? (damage * 100.0) / fasterPokemon.getMaxHealthPoints() : (fasterPokemon.remainingHealth() * 100.0) / fasterPokemon.getMaxHealthPoints();
         logMessage(String.format(Locale.US, "%s used %s dealing %.2f %% damage to %s", slowerPokemon.getName(), move.getName(), damageDone, fasterPokemon.getName()));
+        applyPassiveEffect(slowerPokemon, fasterPokemon, move);
         if (fasterPokemon.receiveDamage(damage)) {
             fasterPokemon.die();
             logMessage(fasterPokemon.getName() + " fainted!");
@@ -204,8 +206,8 @@ public class Battle {
                             // Lógica para otros efectos de "Health" según sea necesario
                             // Por ejemplo, para movimientos que curan el 100% de la salud
                             double healAmount = ownPokemon.getMaxHealthPoints()/2.0;
-                            ownPokemon.addHealthPoints(healAmount); // Método para aumentar la salud del Pokémon propio
-                            logMessage(ownPokemon.getName() + " used " + move.getName() + ", restoring 50% HP!");
+                            double restoredHealthh = ownPokemon.addHealthPoints(healAmount); // Método para aumentar la salud del Pokémon propio
+                            logMessage(ownPokemon.getName() + " used " + move.getName() + ", restoring " + restoredHealthh/ownPokemon.getMaxHealthPoints()*100 + "% of its health!");
                             return false;
                         }
                     }

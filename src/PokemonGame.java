@@ -80,6 +80,7 @@ public class PokemonGame {
                     
                     case 5:
                         //before combat, create IA Pokemon team
+                        IA.getTeam().clear();
                         while (IA.getTeam().size() < 3) {
                             Random random = new Random();
                             int randomIndex = random.nextInt(availablePokemons.size());

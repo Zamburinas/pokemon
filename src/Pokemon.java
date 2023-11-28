@@ -129,6 +129,9 @@ public class Pokemon {
     }
 
     public boolean isDead(){
+        if (isDead == false && this.stats.getHealthPoints() <= 0) {
+            this.die();
+        }
         return this.isDead;
     }
 
@@ -150,16 +153,21 @@ public class Pokemon {
         return this.stats.getMaxHealthPoints();
     }
 
-    public void addHealthPoints(double healthPoints) {
+    public double addHealthPoints(double healthPoints) {
+        double healthPointsAdded = 0;
         if(this.stats.getHealthPoints()+healthPoints>this.stats.getMaxHealthPoints()){
+            healthPointsAdded = this.stats.getMaxHealthPoints()-this.stats.getHealthPoints();
             this.stats.setHealthPoints(this.stats.getMaxHealthPoints());
-            return;
+            
         }else if(this.stats.getHealthPoints()+healthPoints<0){
+            healthPointsAdded = this.stats.getHealthPoints();
             this.stats.setHealthPoints(0);
-            return;
+            
         }else{
+            healthPointsAdded = healthPoints;
             this.stats.setHealthPoints(this.stats.getHealthPoints()+healthPoints);
-            return;
+            
         }
+        return healthPointsAdded;
     }
 }

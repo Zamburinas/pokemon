@@ -2,7 +2,10 @@
 ->> Mejorar el como detetar que hay cambio
 ->> Jugar alguna partida para ver que todo funcionar correctamente
 ->> Mostar rango de velocidad rival (Pestaña ver info rival y pokemon actual)
-->> Porcentaje de vida en vez de hp
---> Colocar la llamada a aplicacr pasivas en el turno
+-- accruracy
 
 Bugs:
+
+Limitaciones:
+->> A la hora de implementar más pasivas :Las pasivas se aplican previamente al cambio de stats por daño, es decir si se usa un ataque que baja 
+la defensa, primero se bajrá la defensa y luego se ejecutará el ataqque por lo que el ataque hará mas daño.
