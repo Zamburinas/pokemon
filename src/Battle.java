@@ -168,17 +168,30 @@ public class Battle {
         double critical = new Random().nextDouble() < probabilityCritical ? 2.0 : 1.0;
         double randomDamage = 0.85 + (1.0 - 0.85) * (new Random().nextDouble());
         double typeDamage = (typeTable.get(move.getType()).get(defender.getPrimaryType()));
+        
         if (defender.getSecondaryType() != null)
             typeDamage *= typeTable.get(move.getType()).get(defender.getSecondaryType());
+        
+        double accuracy = move.getAccuracy();
+        boolean attackHits = new Random().nextDouble() * 100 <= accuracy;
+        
+        if (!attackHits) {
+            logMessage(attacker.getName() + " tried to use " + move.getName() + " but it missed!");
+            return 0; // Retorna 0 si el ataque falla
+        }
+        
         double modifier = stab * critical * randomDamage * typeDamage;
         double attack = (double) attacker.getAttack(move.getCategory());
         double defense = (double) defender.getDefense(move.getCategory());
-        double normalDamage = (((2*attacker.getLevel() + 10) / 250.0) * (attack/defense)*move.getPower());
+        double normalDamage = (((2 * attacker.getLevel() + 10) / 250.0) * (attack / defense) * move.getPower());
+        
         if (critical == 2 && modifier != 0) {
             logMessage("Critical Damage!");
         }
+        
         return normalDamage * modifier;
     }
+    
     
     private boolean applyPassiveEffect(Pokemon ownPokemon, Pokemon opponentPokemon, Move move) {
 
