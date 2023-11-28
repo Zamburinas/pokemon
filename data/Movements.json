@@ -85,11 +85,10 @@
     },
     "Hyper Beam":{
         "Power":150,
-        "Accuracy":90,
+        "Accuracy":45,
         "Type":"Normal",
         "Category":"Special",
-        "PP":5,
-        "Passive":{"Probability": 100, "Effect": "Recharge", "Modifier":{"User":"Own" }}
+        "PP":5
     },
     "Soft Boiled":{
         "Power":0,
@@ -191,7 +190,7 @@
         "Type":"Normal",
         "Category":"Physical",
         "PP":5,
-        "Passive":{"Probability": 100,   "Modifier":{"User":"Own","Stat":"healthPoints","Value":0}}
+        "Passive":{"Probability": 100, "Effect": "Health",  "Modifier":{"User":"Own","Stat":"healthPoints","Value":0}}
     },
     "X-Scissor":{
         "Power":80,

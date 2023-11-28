@@ -58,8 +58,41 @@ public class PokemonDataReader {
                 int power = moveData.getInt("Power");
                 int accuracy = moveData.getInt("Accuracy");
                 int maxMoves = moveData.getInt("PP");
-                Move move = new Move(moveName, type, category, power, maxMoves, accuracy);
+
+                Move move;
+                if (moveData.has("Passive")) {
+                    JSONObject passiveData = moveData.getJSONObject("Passive");
+
+                    int probability = passiveData.getInt("Probability");
+
+                    Move.Modifier modifier = null;
+                    if (passiveData.has("Modifier")) {
+                        JSONObject modifierData = passiveData.getJSONObject("Modifier");
+                        String user = modifierData.getString("User");
+                        String stat = modifierData.optString("Stat", null);
+                        float value = (float) modifierData.optDouble("Value", 0.0f);
+
+                        if (stat != null) {
+                            modifier = new Move.Modifier(user, stat, value);
+                        } else {
+                            modifier = new Move.Modifier(user);
+                        }
+                    }
+
+                    if (passiveData.has("Effect")) {
+                        String effect = passiveData.getString("Effect");
+                        Move.Passive passive = new Move.Passive(probability, effect, modifier);
+                        move = new Move(moveName, type, category, power, maxMoves, accuracy, passive);
+                    } else {
+                        Move.Passive passive = new Move.Passive(probability, modifier);
+                        move = new Move(moveName, type, category, power, maxMoves, accuracy, passive);
+                    }
+                } else {
+                    move = new Move(moveName, type, category, power, maxMoves, accuracy);
+                }
+
                 moves.put(moveName, move);
+                //move.printMoveDetails(); 
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,6 +100,7 @@ public class PokemonDataReader {
 
         return moves;
     }
+    
 
     public static Map<String, Map<String,Double>> createTypeTable(String filePath) {
         Map<String, Map<String,Double>> moves = new HashMap<>();

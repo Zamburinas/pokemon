@@ -42,8 +42,8 @@ public class Stats {
         return this.healthPoints;
     }
 
-    public void setHealthPoints(int healthPoints) {
-        this.healthPoints = healthPoints;
+    public void setHealthPoints(double healthPoints) {
+        this.healthPoints = (int) healthPoints;
     }
 
     public int getAttack() {

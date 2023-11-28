@@ -178,12 +178,53 @@ public class Battle {
         return normalDamage * modifier;
     }
     
+    private boolean applyPassiveEffect(Pokemon ownPokemon, Pokemon opponentPokemon, Move move) {
+
+        // aplica pasivas y devuelve true si el pokemon activo muere
+        if (move.getPassive() != null) {
+            Move.Passive passive = move.getPassive();
+            // Verifica si la pasiva tiene un efecto de "Health"
+            if (passive.getEffect() != null && passive.getEffect().equalsIgnoreCase("Health")) {
+                Move.Modifier modifier = passive.getModifier();
+                // Verifica si el modificador es para "Health"
+                if (modifier != null && modifier.getStat().equalsIgnoreCase("healthPoints")) {
+                    String user = modifier.getUser();
+                    System.out.println("User: " + user);
+                    // Si el modificador es propio
+                    if (user.equalsIgnoreCase("Own")) {
+                        // Si el valor del modificador es 0, asume un efecto total de agotamiento de la salud
+                        if (modifier.getValue() == 0) {
+                            // Establece la salud del Pokémon en 0 (agotamiento total)
+                            ownPokemon.receiveDamage(ownPokemon.remainingHealth());
+                            logMessage(ownPokemon.getName() + " used " + move.getName() + ", sacrificing itself!");
+                            return true;
+                        }
+                        // Si el valor del modificador no es 0, asume un efecto diferente
+                        else {
+                            // Lógica para otros efectos de "Health" según sea necesario
+                            // Por ejemplo, para movimientos que curan el 100% de la salud
+                            double healAmount = ownPokemon.getMaxHealthPoints()/2.0;
+                            ownPokemon.addHealthPoints(healAmount); // Método para aumentar la salud del Pokémon propio
+                            logMessage(ownPokemon.getName() + " used " + move.getName() + ", restoring 50% HP!");
+                            return false;
+                        }
+                    }
+                    // Puedes agregar más verificaciones aquí para otros efectos de pasivas si es necesario
+                }
+            }
+            
+        }
+        return false;
+    }
+
+
     public double booleanToInt(double ifTrueValue, boolean condition) {
         if (condition) {
             return ifTrueValue;
         }
         return 0;
     }
+
 
     private int isBattleOver() {
         boolean allPlayer1PokemonsFainted = true;

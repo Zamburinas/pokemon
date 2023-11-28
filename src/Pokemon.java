@@ -149,4 +149,17 @@ public class Pokemon {
     public int getMaxHealthPoints() {
         return this.stats.getMaxHealthPoints();
     }
+
+    public void addHealthPoints(double healthPoints) {
+        if(this.stats.getHealthPoints()+healthPoints>this.stats.getMaxHealthPoints()){
+            this.stats.setHealthPoints(this.stats.getMaxHealthPoints());
+            return;
+        }else if(this.stats.getHealthPoints()+healthPoints<0){
+            this.stats.setHealthPoints(0);
+            return;
+        }else{
+            this.stats.setHealthPoints(this.stats.getHealthPoints()+healthPoints);
+            return;
+        }
+    }
 }

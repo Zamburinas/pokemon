@@ -2,6 +2,7 @@
 ->> Mejorar el como detetar que hay cambio
 ->> Jugar alguna partida para ver que todo funcionar correctamente
 ->> Mostar rango de velocidad rival (Pestaña ver info rival y pokemon actual)
+->> Porcentaje de vida en vez de hp
+--> Colocar la llamada a aplicacr pasivas en el turno
 
 Bugs:
-->> Las velocidades (Golem parece ser rapidisimo)
