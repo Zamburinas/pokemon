@@ -6,8 +6,3 @@ Bugs:
 Limitaciones:
 ->> A la hora de implementar más pasivas :Las pasivas se aplican previamente al cambio de stats por daño, es decir si se usa un ataque que baja 
 la defensa, primero se bajrá la defensa y luego se ejecutará el ataqque por lo que el ataque hará mas daño.
-
-Implementaciones:
-Incluí un parametro más en el movimiento que es "Recoil" de esta forma cada vez que atacas el pokemon que usa el ataque recibe daño a si mismo en base a
-este recoil, lo incluí para que funcione el ataque "Explosión", pero teniendo este parametro podemos añadir otros ataques que tengan recoil como "Wave crash" o 
-"Fire blitz"
