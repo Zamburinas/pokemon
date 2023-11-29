@@ -28,7 +28,8 @@ public class Battle {
         player2.setCurrentPokemon(player2.getPokemonFromTeam(0));
         logMessage(player1.getPlayerName() + " sends out " + player1.getCurrentPokemon().getName() + " to the field!");
         logMessage(player2.getPlayerName() + " sends out " + player2.getCurrentPokemon().getName() + " to the field!");
-        
+        int[] range = RandomSpeed(player2.getCurrentPokemon().getSpeed(), 30);
+        logMessage("Speed:   "+range[0]+"-"+range[1]);        
         while (victoria == 0) {
             playerTurn();
             victoria = isBattleOver();
@@ -51,6 +52,8 @@ public class Battle {
         while(player2.getCurrentPokemon().isDead()) player2.setPokemonFromTeam(new Random().nextInt(3));
         double healthPercentage2 = ((double) player2.getCurrentPokemon().getStats().getHealthPoints() / player2.getCurrentPokemon().getMaxHealthPoints()) * 100;
         logMessage("AI Pokémon: " + player2.getCurrentPokemon().getName() + " (" + String.format("%.2f", healthPercentage2) + "% HP)");
+        int[] range = RandomSpeed(player2.getCurrentPokemon().getSpeed(), 30);
+        logMessage("Speed:   "+range[0]+"-"+range[1]);
         int selectedMove1 = pokemonChange, selectedMove2 = pokemonChange;
         boolean pokemonSwitched = false;
         Pokemon player1Pokemon = player1.getCurrentPokemon();
@@ -136,8 +139,7 @@ public class Battle {
         }
         move = fasterPokemon.useMove(fastMove);
         double damage = calculateDamage(fasterPokemon, slowerPokemon, move);
-        double damageDone = damage <= slowerPokemon.remainingHealth() ? (damage * 100.0) / slowerPokemon.getMaxHealthPoints() : (slowerPokemon.remainingHealth() * 100.0) / slowerPokemon.getMaxHealthPoints();
-        logMessage(String.format(Locale.US, "%s used %s dealing %.2f %% damage to %s", fasterPokemon.getName(), move.getName(), damageDone, slowerPokemon.getName()));
+        
         applyPassiveEffect(fasterPokemon, slowerPokemon, move);
         if (slowerPokemon.receiveDamage(damage)) {
             slowerPokemon.die();
@@ -148,9 +150,8 @@ public class Battle {
             return;
         }
         move = slowerPokemon.useMove(slowMove);
-        damage = calculateDamage(slowerPokemon, fasterPokemon, move);
-        damageDone = damage <= fasterPokemon.remainingHealth() ? (damage * 100.0) / fasterPokemon.getMaxHealthPoints() : (fasterPokemon.remainingHealth() * 100.0) / fasterPokemon.getMaxHealthPoints();
-        logMessage(String.format(Locale.US, "%s used %s dealing %.2f %% damage to %s", slowerPokemon.getName(), move.getName(), damageDone, fasterPokemon.getName()));
+        damage=calculateDamage(slowerPokemon, fasterPokemon, move);
+        
         applyPassiveEffect(slowerPokemon, fasterPokemon, move);
         if (fasterPokemon.receiveDamage(damage)) {
             fasterPokemon.die();
@@ -159,7 +160,6 @@ public class Battle {
         }
     }
     
-
 
     // Method to calculate damage
     private double calculateDamage(Pokemon attacker, Pokemon defender, Move move) {
@@ -184,13 +184,19 @@ public class Battle {
         double attack = (double) attacker.getAttack(move.getCategory());
         double defense = (double) defender.getDefense(move.getCategory());
         double normalDamage = (((2 * attacker.getLevel() + 10) / 250.0) * (attack / defense) * move.getPower());
-        
+        double damage=normalDamage * modifier;
+        double damageDone = damage <= defender.remainingHealth() ? (damage * 100.0) / defender.getMaxHealthPoints() : (defender.remainingHealth() * 100.0) / defender.getMaxHealthPoints();
+        logMessage(String.format(Locale.US, "%s used %s dealing %.2f %% damage to %s", attacker.getName(), move.getName(), damageDone, defender.getName()));
+
+        if(typeDamage>=2){
+            logMessage("It's super effective!");
+        }
+
         if (critical == 2 && modifier != 0) {
             logMessage("Critical Damage!");
         }
-        
-        return normalDamage * modifier;
-    }
+        return damage;
+    }       
     
     
     private boolean applyPassiveEffect(Pokemon ownPokemon, Pokemon opponentPokemon, Move move) {
@@ -324,5 +330,20 @@ public class Battle {
 
     public void logMessage(String message, boolean newLine) {
         System.out.print(message);
+    }
+    private static int[] RandomSpeed(int num, int range) {
+        Random random = new Random();
+        int halfRange = range / 2;
+        int offset = random.nextInt(halfRange + 1) - halfRange;
+        int lowLimit = num - halfRange + offset;
+        int uppLimit = lowLimit + range - 1;
+
+        if (lowLimit < 0) {
+            lowLimit = 0;
+            uppLimit = range - 1;
+        }
+
+        int[] rango = {lowLimit, uppLimit};
+        return rango;
     }
 }
