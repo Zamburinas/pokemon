@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/option"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OptionsActivity">
+
+
+    <Button
+        android:id="@+id/botonSet"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:layout_marginTop="40sp"
+        android:background="#46DFCD30"
+        android:text="View Set"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:visibility="visible" />
+
+
+    <Button
+        android:id="@+id/botonChoose"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:layout_marginTop="100sp"
+        android:background="#46DFCD30"
+        android:text="Choose pokemon"
+        android:textAlignment="center"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/botonBattle"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="150sp"
+        android:background="#46DFCD30"
+        android:text="Battle"
+        android:textAlignment="center"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/botonBack"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="85sp"
+        android:background="#46DFCD30"
+        android:text="Back"
+        android:textAlignment="center"
+        android:textColor="#050505"
+        android:textSize="30sp" />
+</FrameLayout>

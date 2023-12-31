@@ -1,0 +1,116 @@
+{
+    "Charizard": {
+        "level":50,
+        "healtPoints": 153,
+        "attack": 80,
+        "defense": 98,
+        "speed": 167,
+        "specialAttack": 161,
+        "specialdefense": 106,
+        "primaryType": "Fire",
+        "secondaryType": "Flying",
+        "movements": ["Fire Blast", "Flamethrower", "Hurricane", "Earthquake"]
+    },
+    "Venusaur": {
+        "level":50,
+        "healtPoints": 186,
+        "attack": 91,
+        "defense": 103,
+        "speed": 112,
+        "specialAttack": 155,
+        "specialdefense": 125,
+        "primaryType": "Grass",
+        "secondaryType": "Poison",
+        "movements": ["Sludge Bomb", "Power Whip", "Syntesis", "Earthquake"]
+    },
+    "Blastoise": {
+        "level":50,
+        "healtPoints": 154,
+        "attack": 103,
+        "defense": 121,
+        "speed": 130,
+        "specialAttack": 137,
+        "specialdefense": 125,
+        "primaryType": "Water",
+        "movements": ["Hydro Pump", "Surf", "Ice Punch", "Headbutt"]
+    },
+    "Snorlax": {
+        "level":50,
+        "healtPoints": 266,
+        "attack": 130,
+        "defense": 86,
+        "speed": 50,
+        "specialAttack": 76,
+        "specialdefense": 178,
+        "primaryType": "Normal",
+        "movements": ["Hyper Beam", "Headbutt", "Soft Boiled", "Earthquake"]
+    },
+    "Pikachu": {
+        "level":50,
+        "healtPoints": 135,
+        "attack": 99,
+        "defense": 75,
+        "speed": 178,
+        "specialAttack": 142,
+        "specialdefense": 101,
+        "primaryType": "Electric",
+        "movements": ["Thunderbolt", "Thunder", "Surf", "Zen Headbutt"]
+    },
+    "Machamp": {
+        "level":50,
+        "healtPoints": 165,
+        "attack": 182,
+        "defense": 100,
+        "speed": 107,
+        "specialAttack":85,
+        "specialdefense": 105,
+        "primaryType": "Fighting",
+        "movements": ["Submission", "Body Slam", "Brick Break", "Rock Slide"]
+    },
+    "Gengar": {
+        "level":50,
+        "healtPoints": 135,
+        "attack": 76,
+        "defense": 80,
+        "speed": 178,
+        "specialAttack": 182,
+        "specialdefense": 96,
+        "primaryType": "Ghost",
+        "secondaryType": "Poison",
+        "movements": ["Sludge Bomb", "Shadow Ball", "Thunderbolt", "Psychic"]
+    },
+    "Mewtwo": {
+        "level":50,
+        "healtPoints": 181,
+        "attack": 117,
+        "defense": 110,
+        "speed": 165,
+        "specialAttack": 174,
+        "specialdefense": 111,
+        "primaryType": "Psychic",
+        "movements": ["Psychic", "Shadow Ball", "Blizzard", "Hyper Beam"]
+    },
+    "Golem": {
+        "level":50,
+        "healtPoints": 155,
+        "attack": 189,
+        "defense": 150,
+        "speed": 97,
+        "specialAttack": 67,
+        "specialdefense": 86,
+        "primaryType": "Rock",
+        "secondaryType": "Ground",
+        "movements": ["Rock Slide", "Earthquake", "Explosion", "Stone Edge"]
+    },
+    "Pinsir": {
+        "level":50,
+        "healtPoints": 140,
+        "attack": 177,
+        "defense": 120,
+        "speed": 150,
+        "specialAttack": 67,
+        "specialdefense": 91,
+        "primaryType": "Bug",
+        "movements": ["Megahorn", "Headbutt", "Brick Break", "X-Scissor"]
+    }
+}
