@@ -11,6 +11,18 @@ public class Player {
         this.team = new ArrayList<>();
     }
 
+    public Player(Player player) {
+        List<Pokemon> teamCopy = player.getTeam();
+        this.team = new ArrayList<>();
+        for (int i = 0; i < teamCopy.size(); i++) {
+            this.team.add(new Pokemon(teamCopy.get(i)));
+            if (teamCopy.get(i).equals(player.getCurrentPokemon())) {
+                this.currentPokemon = this.team.get(i);
+            } 
+        }
+        this.playerName = player.getPlayerName();
+    }
+
     public boolean addPokemonToTeam(Pokemon pokemon) {
         if (team.size() < 3) {
             boolean isAlreadyInTeam = team.stream().anyMatch(p -> p.getName().equals(pokemon.getName()));
@@ -75,5 +87,15 @@ public class Player {
 
     public void setCurrentPokemon(Pokemon currentPokemon) {
         this.currentPokemon = currentPokemon;
+    }
+
+    public int getRemainingPokemons() {
+        int remaining = 0;
+        for (int i = 0; i < team.size(); i++) {
+            if (!team.get(i).isDead()) {
+                remaining++;
+            }
+        }
+        return remaining;
     }
 }
