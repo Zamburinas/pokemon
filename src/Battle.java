@@ -190,7 +190,13 @@ public class Battle {
         double defense = (double) defender.getDefense(move.getCategory());
         double normalDamage = (((2 * attacker.getLevel() + 10) / 250.0) * (attack / defense) * move.getPower());
         double damage = normalDamage * modifier;
-        double damageDone = damage <= defender.remainingHealth() ? (damage * 100.0) / defender.getMaxHealthPoints() : (defender.remainingHealth() * 100.0) / defender.getMaxHealthPoints();
+        double damageDone;
+        if (log) {
+            damageDone = damage <= defender.remainingHealth() ? (damage * 100.0) / defender.getMaxHealthPoints() : (defender.remainingHealth() * 100.0) / defender.getMaxHealthPoints();
+        } else {
+            damageDone = (damage * 100.0) / defender.getMaxHealthPoints();
+        }
+            
         if (log)
             logMessage(String.format(Locale.US, "%s used %s dealing %.2f %% damage to %s", attacker.getName(), move.getName(), damageDone, defender.getName()));
 

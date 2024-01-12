@@ -39,32 +39,25 @@ public class PokemonBattleState implements Cloneable {
     public boolean isTerminal() {
         for (int i = 0; i < player1.getTeam().size(); i++){
             if (player1.getTeam().get(i).getShown() && !player1.getTeam().get(i).isDead()) {
-                return false || Battle.isBattleOver(player1, player2) != 0;
+                return false || Battle.isBattleOver(player1, player2) != 0 || isTerminal;
             }
         }
         return true;
     }
 
-    public PokemonBattleState performAction(int action) {
-        PokemonBattleState newState = new PokemonBattleState(this);
+    public void performAction(int action) {
+        // PokemonBattleState newState = new PokemonBattleState(this);
         int pokemon2move = getAction(player2, player1);
-
         if (action >= 0 && action < 4 && !player2.getCurrentPokemon().isDead()) {
-            Battle.resolveTurn(newState.player1.getCurrentPokemon(), newState.player2.getCurrentPokemon(), action, pokemon2move, false);
-            Pokemon newPokemon = newState.chooseRandomPokemon(newState.player1, true);
-            if (newState.player1.getCurrentPokemon().isDead() && newPokemon != null) {
-                newState.player1.setCurrentPokemon(newPokemon);
-            }
-            newPokemon = newState.chooseRandomPokemon(newState.player2, false);
-            if (newState.player2.getCurrentPokemon().isDead() && newPokemon != null) {
-                newState.player2.setCurrentPokemon(newPokemon);
+            Battle.resolveTurn(player1.getCurrentPokemon(), player2.getCurrentPokemon(), action, pokemon2move, false);
+            if (player2.getCurrentPokemon().isDead()) {
+                this.isTerminal = true;
             }
         } else{
-            Pokemon newPokemon = newState.getPlayer2().getPokemonFromTeam(action);
-            newState.switchActivePokemon(newState.player2, newPokemon);
-            Battle.resolveTurn(newState.player2.getCurrentPokemon(), newState.player2.getCurrentPokemon(), -1, pokemon2move, false);
+            Pokemon newPokemon = getPlayer2().getPokemonFromTeam(action);
+            switchActivePokemon(player2, newPokemon);
+            Battle.resolveTurn(player2.getCurrentPokemon(), player2.getCurrentPokemon(), -1, pokemon2move, false);
         }
-        return newState;
     }
 
     public List<Integer> getLegalActions() {
@@ -90,19 +83,10 @@ public class PokemonBattleState implements Cloneable {
         return legalActions;
     }
 
-    public double getScore(PokemonBattleState state) {
-        double diffHealth = 0;
-        double healthP1 = 100;
-        double healthP2 = ((double) player2.getCurrentPokemon().getStats().getHealthPoints() / (double) player2.getCurrentPokemon().getMaxHealthPoints()) * 100.0;
-
+    public double getScore(PokemonBattleState state) {    
+        double diffHealth = player2.getTeamHealth() - player1.getTeamHealth();
         double mediumPoints = 50 * ((double) ((state.getPlayer1().getRemainingPokemons() - player1.getRemainingPokemons()) - (state.getPlayer2().getRemainingPokemons() - player2.getRemainingPokemons())));
 
-        healthP2 = healthP2 < 0 ? 0 : healthP2;
-        if (player1.getRemainingPokemons() == state.getPlayer1().getRemainingPokemons() && player2.getRemainingPokemons() == state.getPlayer2().getRemainingPokemons())  {
-            healthP1 = ((double) player1.getCurrentPokemon().getStats().getHealthPoints() / (double) player1.getCurrentPokemon().getMaxHealthPoints()) * 100.0;
-            healthP1 = healthP1 < 0 ? 0 : healthP1;  
-        }
-        diffHealth = healthP2 - healthP1;
         
         double battleOver = 0;
         if (Battle.isBattleOver(player1, player2) != 0)

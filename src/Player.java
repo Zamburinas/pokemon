@@ -109,4 +109,12 @@ public class Player {
         }
         return remaining;
     }
+
+    public double getTeamHealth() {
+        double health = 0;
+        for (int i = 0; i < team.size(); i++) {
+            health += team.get(i).isDead() ? 0 : ((double) team.get(i).getStats().getHealthPoints() / (double) team.get(i).getMaxHealthPoints()) * 100.0;
+        }
+        return health;
+    }
 }
