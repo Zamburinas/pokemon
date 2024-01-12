@@ -21,7 +21,7 @@
         "specialdefense": 125,
         "primaryType": "Grass",
         "secondaryType": "Poison",
-        "movements": ["Sludge Bomb", "Power Whip", "Syntesis", "Earthquake"]
+        "movements": ["Sludge Bomb", "Power Whip", "Synthesis", "Earthquake"]
     },
     "Blastoise": {
         "level":50,

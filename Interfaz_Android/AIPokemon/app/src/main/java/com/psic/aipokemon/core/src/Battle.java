@@ -1,5 +1,6 @@
 package com.psic.aipokemon.core.src;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -11,13 +12,15 @@ public class Battle {
     private Player player1;
     private Player player2;
     private int turnCounter = 0;
-    private Map<String, Map<String,Double>> typeTable;
+    public static Map<String, Map<String,Double>> typeTable;
     private static final int pokemonChange = -1;
 
-    public Battle(Player player1, Player player2, Map<String, Map<String, Double>> typeTable) {
+    private static ArrayList<String> messages = new ArrayList<>();
+    private static ArrayList<String> chat = new ArrayList<>();
+
+    public Battle(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
-        this.typeTable = typeTable;
     }
 
     public String[] start() {
@@ -27,7 +30,9 @@ public class Battle {
         player1.setCurrentPokemon(player1.getPokemonFromTeam(0));
         player2.setCurrentPokemon(player2.getPokemonFromTeam(0));
         logMessage(player1.getPlayerName() + " sends out " + player1.getCurrentPokemon().getName() + " to the field!");
+        addArrays(player1.getPlayerName() + " sends out " + player1.getCurrentPokemon().getName() + " to the field!");
         logMessage(player2.getPlayerName() + " sends out " + player2.getCurrentPokemon().getName() + " to the field!");
+        addArrays(player2.getPlayerName() + " sends out " + player2.getCurrentPokemon().getName() + " to the field!");
         int[] range = RandomSpeed(player2.getCurrentPokemon().getSpeed(), 30);
         logMessage("Speed:   "+range[0]+"-"+range[1]);        
         return new String[]{player1.getCurrentPokemon().getName(), player2.getCurrentPokemon().getName(),""+range[0],""+range[1]};
@@ -38,7 +43,9 @@ public class Battle {
     private void playerTurn() {
         turnCounter++;
         logMessage("Turn: " + turnCounter);
-        while(player2.getCurrentPokemon().isDead()) player2.setPokemonFromTeam(new Random().nextInt(3));
+        if (player2.getCurrentPokemon().isDead()) {
+            player2.setPokemonFromTeam(new MonteCarloTreeSearch().findBestMove(new PokemonBattleState(player1, player2)));
+        }
         double healthPercentage2 = ((double) player2.getCurrentPokemon().getStats().getHealthPoints() / player2.getCurrentPokemon().getMaxHealthPoints()) * 100;
         logMessage("AI Pokémon: " + player2.getCurrentPokemon().getName() + " (" + String.format("%.2f", healthPercentage2) + "% HP)");
         int[] range = RandomSpeed(player2.getCurrentPokemon().getSpeed(), 30);
@@ -98,19 +105,21 @@ public class Battle {
         } while (!(selectedMove1 != -1 || pokemonSwitched));
     
         
-
-        selectedMove2 = new Random().nextInt(player2.getCurrentPokemon().getMoves().length);
-        resolveTurn(player1.getCurrentPokemon(), player2.getCurrentPokemon(), selectedMove1, selectedMove2);
-
+        MonteCarloTreeSearch mcts = new MonteCarloTreeSearch();
+        selectedMove2 = mcts.findBestMove(new PokemonBattleState(player1, player2));
+        resolveTurn(player1.getCurrentPokemon(), player2.getCurrentPokemon(), selectedMove1, selectedMove2, true);
+        
         if (player1.getCurrentPokemon().isDead()) {
             do {selectPokemonForPlayer(player1);
-            } while ((isBattleOver()==0) && player1.getCurrentPokemon().isDead());
+            } while ((isBattleOver(player1, player2)==0) && player1.getCurrentPokemon().isDead());
         }
         // scanner.close();
     }
     
 
-    public void resolveTurn(Pokemon pokemonPlayer1, Pokemon pokemonPlayer2, int move1, int move2) {
+    public static void resolveTurn(Pokemon pokemonPlayer1, Pokemon pokemonPlayer2, int move1, int move2, boolean log) {
+        pokemonPlayer1.getStats().setInitHP(pokemonPlayer1.getStats().getHealthPoints());
+        pokemonPlayer2.getStats().setInitHP(pokemonPlayer2.getStats().getHealthPoints());
         // Both want To change
         if (move1 == pokemonChange && move2 == pokemonChange) {
             return;
@@ -120,7 +129,7 @@ public class Battle {
         Pokemon fasterPokemon = pokemonPlayer1, slowerPokemon = pokemonPlayer2;
         int fastMove = move1, slowMove = move2;
         Move move;
-        if (pokemonPlayer2.getSpeed() > pokemonPlayer1.getSpeed() || (pokemonPlayer2.getSpeed() == pokemonPlayer1.getSpeed() && new Random().nextDouble() >= 0.5) || move1 == pokemonChange) {
+        if (((pokemonPlayer2.getSpeed() > pokemonPlayer1.getSpeed() || (pokemonPlayer2.getSpeed() == pokemonPlayer1.getSpeed() && new Random().nextDouble() >= 0.5)) && move2 != pokemonChange)  || move1 == pokemonChange) {
             fasterPokemon = pokemonPlayer2;
             slowerPokemon = pokemonPlayer1;
             fastMove = move2;
@@ -129,12 +138,16 @@ public class Battle {
 
         if(!(fastMove==-1)) {
             move = fasterPokemon.useMove(fastMove);
-            double damage = calculateDamage(fasterPokemon, slowerPokemon, move);
+            double damage = calculateDamage(fasterPokemon, slowerPokemon, move, log);
 
-            applyPassiveEffect(fasterPokemon, slowerPokemon, move);
+            applyPassiveEffect(fasterPokemon, slowerPokemon, move, log);
             if (slowerPokemon.receiveDamage(damage)) {
                 slowerPokemon.die();
-                logMessage(slowerPokemon.getName() + " fainted!");
+                if (log) {
+                    logMessage(slowerPokemon.getName() + " fainted!");
+                    addArrays(slowerPokemon.getName() + " fainted!");
+                }
+                
                 return;
             }
             if (slowMove == pokemonChange) {
@@ -143,12 +156,16 @@ public class Battle {
         }
         if(!(slowMove==-1)) {
             move = slowerPokemon.useMove(slowMove);
-            double damage = calculateDamage(slowerPokemon, fasterPokemon, move);
+            double damage = calculateDamage(slowerPokemon, fasterPokemon, move, log);
 
-            applyPassiveEffect(slowerPokemon, fasterPokemon, move);
+            applyPassiveEffect(slowerPokemon, fasterPokemon, move, log);
             if (fasterPokemon.receiveDamage(damage)) {
                 fasterPokemon.die();
-                logMessage(fasterPokemon.getName() + " fainted!");
+                if (log) {
+                    logMessage(fasterPokemon.getName() + " fainted!");
+                    addArrays(fasterPokemon.getName() + " fainted!");
+                }
+                
                 return;
             }
         }
@@ -156,8 +173,8 @@ public class Battle {
     
 
     // Method to calculate damage
-    private double calculateDamage(Pokemon attacker, Pokemon defender, Move move) {
-        double probabilityCritical = 0.0625;
+    private static double calculateDamage(Pokemon attacker, Pokemon defender, Move move, boolean log) {
+        double probabilityCritical = log ? 0.0625 : 0.0;
         double stab = (1 + booleanToInt(0.5, attacker.isType(move.getType())));
         double critical = new Random().nextDouble() < probabilityCritical ? 2.0 : 1.0;
         double randomDamage = 0.85 + (1.0 - 0.85) * (new Random().nextDouble());
@@ -169,8 +186,9 @@ public class Battle {
         double accuracy = move.getAccuracy();
         boolean attackHits = new Random().nextDouble() * 100 <= accuracy;
         
-        if (!attackHits) {
+        if (!attackHits && log) {
             logMessage(attacker.getName() + " tried to use " + move.getName() + " but it missed!");
+            addArrays(attacker.getName() + " tried to use " + move.getName() + " but it missed!");
             return 0; // Retorna 0 si el ataque falla
         }
         
@@ -179,21 +197,37 @@ public class Battle {
         double defense = (double) defender.getDefense(move.getCategory());
         double normalDamage = (((2 * attacker.getLevel() + 10) / 250.0) * (attack / defense) * move.getPower());
         double damage=normalDamage * modifier;
-        double damageDone = damage <= defender.remainingHealth() ? (damage * 100.0) / defender.getMaxHealthPoints() : (defender.remainingHealth() * 100.0) / defender.getMaxHealthPoints();
-        logMessage(String.format(Locale.US, "%s used %s dealing %.2f %% damage to %s", attacker.getName(), move.getName(), damageDone, defender.getName()));
-
-        if(typeDamage>=2){
-            logMessage("It's super effective!");
+        double damageDone;
+        if (log) {
+            damageDone = damage <= defender.remainingHealth() ? (damage * 100.0) / defender.getMaxHealthPoints() : (defender.remainingHealth() * 100.0) / defender.getMaxHealthPoints();
+        } else {
+            damageDone = (damage * 100.0) / defender.getMaxHealthPoints();
+        }
+        if (!move.getName().equalsIgnoreCase("Soft Boiled") && !move.getName().equalsIgnoreCase("Synthesis") && log) {
+            logMessage(String.format(Locale.US, "%s used %s dealing %.2f %% damage to %s", attacker.getName(), move.getName(), damageDone, defender.getName()));
+            addArrays(String.format(Locale.US, "%s used %s dealing %.2f %% damage to %s", attacker.getName(), move.getName(), damageDone, defender.getName()));
         }
 
-        if (critical == 2 && modifier != 0) {
-            logMessage("Critical Damage!");
+        if(typeDamage>=2 && log){
+            if (!move.getName().equalsIgnoreCase("Soft Boiled") && !move.getName().equalsIgnoreCase("Synthesis")) {
+                logMessage("It's super effective!");
+                addArrays("It's super effective!");
+            }
+        }
+
+        if (critical == 2 && modifier != 0 && log) {
+            if (!move.getName().equalsIgnoreCase("Soft Boiled") && !move.getName().equalsIgnoreCase("Synthesis")) {
+                logMessage("Critical Damage!");
+                addArrays("Critical Damage!");
+            }
         }
         return damage;
     }       
     
     
-    private boolean applyPassiveEffect(Pokemon ownPokemon, Pokemon opponentPokemon, Move move) {
+    private static boolean applyPassiveEffect(Pokemon ownPokemon, Pokemon opponentPokemon, Move move, boolean log) {
+
+        ownPokemon.getStats().resetAddedHP();
 
         // aplica pasivas y devuelve true si el pokemon activo muere
         if (move.getPassive() != null) {
@@ -204,14 +238,18 @@ public class Battle {
                 // Verifica si el modificador es para "Health"
                 if (modifier != null && modifier.getStat().equalsIgnoreCase("healthPoints")) {
                     String user = modifier.getUser();
-                    System.out.println("User: " + user);
+                    if (log)
+                        System.out.println("User: " + user);
                     // Si el modificador es propio
                     if (user.equalsIgnoreCase("Own")) {
                         // Si el valor del modificador es 0, asume un efecto total de agotamiento de la salud
                         if (modifier.getValue() == 0) {
                             // Establece la salud del Pokémon en 0 (agotamiento total)
                             ownPokemon.receiveDamage(ownPokemon.remainingHealth());
-                            logMessage(ownPokemon.getName() + " used " + move.getName() + ", sacrificing itself!");
+                            if (log) {
+                                logMessage(ownPokemon.getName() + " used " + move.getName() + ", sacrificing itself!");
+                                addArrays(ownPokemon.getName() + " used " + move.getName() + ", sacrificing itself!");
+                            }
                             return true;
                         }
                         // Si el valor del modificador no es 0, asume un efecto diferente
@@ -220,7 +258,12 @@ public class Battle {
                             // Por ejemplo, para movimientos que curan el 100% de la salud
                             double healAmount = ownPokemon.getMaxHealthPoints()/2.0;
                             double restoredHealthh = ownPokemon.addHealthPoints(healAmount); // Método para aumentar la salud del Pokémon propio
-                            logMessage(ownPokemon.getName() + " used " + move.getName() + ", restoring " + restoredHealthh/ownPokemon.getMaxHealthPoints()*100 + "% of its health!");
+                            DecimalFormat formato = new DecimalFormat("#.##");
+                            double percRestHealth = restoredHealthh/ownPokemon.getMaxHealthPoints()*100;
+                            if (log) {
+                                logMessage(ownPokemon.getName() + " used " + move.getName() + ", restoring " + formato.format(percRestHealth) + "% of its health!");
+                                addArrays(ownPokemon.getName() + " used " + move.getName() + ", restoring " + formato.format(percRestHealth) + "% of its health!");
+                            }
                             return false;
                         }
                     }
@@ -233,7 +276,7 @@ public class Battle {
     }
 
 
-    public double booleanToInt(double ifTrueValue, boolean condition) {
+    public static double booleanToInt(double ifTrueValue, boolean condition) {
         if (condition) {
             return ifTrueValue;
         }
@@ -241,12 +284,12 @@ public class Battle {
     }
 
 
-    public int isBattleOver() {
+    public static int isBattleOver(Player player1Pokemon, Player player2Pokemon) {
         boolean allPlayer1PokemonsFainted = true;
         boolean allPlayer2PokemonsFainted = true;
 
         // Check if any of player1's Pok\u00E9mon have remaining health points
-        for (Pokemon pokemon : player1.getTeam()) {
+        for (Pokemon pokemon : player1Pokemon.getTeam()) {
             if (!pokemon.isDead()) {
                 allPlayer1PokemonsFainted = false; // At least one Pok\u00E9mon of player1 has not fainted
                 break;
@@ -254,7 +297,7 @@ public class Battle {
         }
 
         // Check if any of player2's Pok\u00E9mon have remaining health points
-        for (Pokemon pokemon : player2.getTeam()) {
+        for (Pokemon pokemon : player2Pokemon.getTeam()) {
             if (!pokemon.isDead()) {
                 allPlayer2PokemonsFainted = false; // At least one Pok\u00E9mon of player2 has not fainted
                 break;
@@ -270,7 +313,7 @@ public class Battle {
         return 0;
     }
     
-    private boolean selectPokemonForPlayer(Player player) {
+    private static boolean selectPokemonForPlayer(Player player) {
         Scanner scanner = new Scanner(System.in);
         boolean validSelection = false;
         boolean switched = false;
@@ -318,12 +361,15 @@ public class Battle {
     }
     
 
-    public void logMessage(String message) {
-        System.out.println(message);
+    public static void logMessage(String message) { System.out.println(message); }
+
+    public static void logMessage(String message, boolean newLine) {
+        System.out.print(message);
     }
 
-    public void logMessage(String message, boolean newLine) {
-        System.out.print(message);
+    public static void addArrays(String message) {
+        messages.add(message);
+        chat.add(message);
     }
     public static int[] RandomSpeed(int num, int range) {
         Random random = new Random();
@@ -339,5 +385,21 @@ public class Battle {
 
         int[] rango = {lowLimit, uppLimit};
         return rango;
+    }
+
+    public ArrayList<String> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(ArrayList<String> messagesAux) {
+        messages = messagesAux;
+    }
+
+    public ArrayList<String> getChat() {
+        return chat;
+    }
+
+    public void setChat(ArrayList<String> chatAux) {
+        chat = chatAux;
     }
 }

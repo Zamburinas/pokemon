@@ -13,8 +13,7 @@ public class PokemonGame {
 
         List<Pokemon> availablePokemons = PokemonDataReader.createAvailablePokemons( jsonPokemon,jsonStringMove );
         Map<String, Map<String,Double>> typeTable = PokemonDataReader.createTypeTable(jsonTable);
-
-        System.out.println("holjansdijnaisnjdoajsndoasdasd");
+        Battle.typeTable = typeTable;
         if (availablePokemons != null) {
             int choice;
             do {
@@ -93,8 +92,7 @@ public class PokemonGame {
                         }
                         
                         System.out.println("Initiating combat...");
-                        Battle battle = new Battle(player, IA, typeTable);
-                        System.out.println("holjansdijnaisnjdoajsndoasdasd");
+                        Battle battle = new Battle(player, IA);
                         battle.start();
                         choice = 5;
                         break;

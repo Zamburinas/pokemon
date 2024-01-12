@@ -10,6 +10,10 @@ public class Stats {
     private int speed;
     private int maxHealthPoints;
 
+    private int addedHP;
+
+    private int initHP;
+
     public Stats(int level, int healthPoints, int attack, int defense, int specialAttack, int specialDefense, int speed) {
         this.level = level;
         this.healthPoints = healthPoints;
@@ -19,6 +23,8 @@ public class Stats {
         this.specialAttack = specialAttack;
         this.defense = defense;
         this.speed = speed;
+        this.addedHP = 0;
+        this.initHP = healthPoints;
     }
 
     public Stats (Stats stats) {
@@ -30,6 +36,8 @@ public class Stats {
         this.defense = stats.getDefense();
         this.speed = stats.getSpeed();
         this.maxHealthPoints = stats.getMaxHealthPoints();
+        this.addedHP = 0;
+        this.initHP = stats.getMaxHealthPoints();
     }
 
     public int getLevel() {
@@ -96,7 +104,28 @@ public class Stats {
         return false;
     }
 
+    public void increaseHealthPoints(double health) {
+        this.healthPoints = (int) (this.healthPoints + health);
+    }
+
+    public void setAdddedHP(double health) {
+        this.addedHP = (int) (health);
+    }
+
     public int getMaxHealthPoints() {
         return this.maxHealthPoints;
+    }
+
+    public int getAddedHP() {
+        return this.addedHP;
+    }
+
+    public void resetAddedHP() { this.addedHP = 0; }
+
+    public void setInitHP(double health) {
+        this.initHP = (int) (health);
+    }
+    public int getInitHP() {
+        return this.initHP;
     }
 }

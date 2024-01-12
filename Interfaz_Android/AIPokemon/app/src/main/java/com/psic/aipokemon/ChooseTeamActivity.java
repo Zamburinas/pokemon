@@ -9,6 +9,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -59,6 +60,10 @@ public class ChooseTeamActivity extends ComponentActivity {
                 // Verificar si hay exactamente 3 elementos seleccionados
                 if (checkBoxesSeleccionados == 3) {
                         Intent intent = new Intent(ChooseTeamActivity.this, BattleActivity.class);
+                        String[] pokemons=obtenerCheckBoxesSeleccionados();
+                        String cadenaSeparadaPorComas = TextUtils.join(",", pokemons);
+
+                        intent.putExtra("Team",cadenaSeparadaPorComas);
                         startActivity(intent);
 
                 } else {
@@ -160,6 +165,35 @@ public class ChooseTeamActivity extends ComponentActivity {
 
             rowLayout.addView(relativeLayout, relativeLayoutParams);
         }
+    }
+
+    private String[] obtenerCheckBoxesSeleccionados() {
+        String[] checkBoxesSeleccionados = new String[3];
+        int contador = 0;
+
+        LinearLayout linearContainer = findViewById(R.id.linearContainer);
+
+        for (int i = 0; i < linearContainer.getChildCount(); i++) {
+            View rowLayout = linearContainer.getChildAt(i);
+
+            if (rowLayout instanceof LinearLayout) {
+                for (int j = 0; j < ((LinearLayout) rowLayout).getChildCount(); j++) {
+                    View relativeLayout = ((LinearLayout) rowLayout).getChildAt(j);
+
+                    if (relativeLayout instanceof RelativeLayout) {
+                        CheckBox checkBox = (CheckBox) ((RelativeLayout) relativeLayout).getChildAt(1);
+
+                        if (checkBox.isChecked()) {
+                            // Obtener el nombre del Pokémon asociado a la imagen
+                            String nombrePokemon = nombresImagenes[i * 3 + j];
+                            checkBoxesSeleccionados[contador++] = nombrePokemon;
+                        }
+                    }
+                }
+            }
+        }
+
+        return checkBoxesSeleccionados;
     }
 
     private void mostrarPantallita(String pokemonNombre) {

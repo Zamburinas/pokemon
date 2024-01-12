@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <!-- CHAT Button -->
+    <Button
+        android:id="@+id/battleButton"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:background="#00658F"
+        android:textColor="#FFFFFF"
+        android:text="@string/battle"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="10dp"/>
+
+    <ScrollView
+        android:id="@+id/logScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:padding="8dp"
+        android:layout_marginTop="61dp">
+
+        <TextView
+            android:id="@+id/logTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:layout_marginTop="10dp"/>
+
+    </ScrollView>
+
+</RelativeLayout>
