@@ -103,7 +103,6 @@ public class PokemonBattleState implements Cloneable {
             healthP1 = healthP1 < 0 ? 0 : healthP1;  
         }
         diffHealth = healthP2 - healthP1;
-        System.out.println(diffHealth + " " + 30 * ((double) (player2.getRemainingPokemons() - player1.getRemainingPokemons())) + " " + healthP1 + " " + healthP2 + " " + (healthP2 - healthP1) + " " + player2.getRemainingPokemons() +" " + player1.getRemainingPokemons());
         
         double battleOver = 0;
         if (Battle.isBattleOver(player1, player2) != 0)

@@ -20,14 +20,10 @@ public class MonteCarloTreeSearch {
             Node expandedNode = expand(selectedNode);
             double simulationResult = simulate(expandedNode);
             backpropagate(expandedNode, simulationResult);
-            System.out.println("Expanded: " + expandedNode.action + " " + expandedNode.totalScore/expandedNode.visits + " " + expandedNode.visits);
-            System.out.println("Root: " + root.children.size() + " " + root.getUntriedActions());
-            System.out.println("Best: " + getBestChild(root).action + " " + getBestChild(root).totalScore/getBestChild(root).visits);
         }
 
         // Choose the best move based on the tree
         Node bestChild = getBestChild(root);
-        System.out.println(bestChild.action);
         return bestChild.action;
     }
 
@@ -83,10 +79,6 @@ public class MonteCarloTreeSearch {
             int nextAction = new Random().nextInt(legalActions.size());
             int randomAction = legalActions.get(nextAction);
             state = state.performAction(randomAction);
-        }
-        if (node.action != -1) {
-            System.out.println(node.state.getPlayer2().getCurrentPokemon().getMoves()[node.action].getAccuracy()/100.0);
-            System.out.println(node.state.getPlayer2().getCurrentPokemon().getMoves()[node.action].getName());
         }
         if (node.action != -1 && state.getScore(node.state) > 0) {
             return state.getScore(node.state) * node.state.getPlayer2().getCurrentPokemon().getMoves()[node.action].getAccuracy()/100.0;
