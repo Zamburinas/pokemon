@@ -28,10 +28,15 @@ public class MonteCarloTreeSearch {
             if (expandedNode.action == -1) {
                 repetition++;
             }
+            System.out.println("Expanded: " + expandedNode.action + " " + expandedNode.totalScore/expandedNode.visits + " " + expandedNode.visits);
+            System.out.println("Root: " + root.children.size() + " " + root.getUntriedActions());
+            Node best =  getBestChild(root);
+            System.out.println("Best: " + best.action + " " + best.totalScore/best.visits);
         }
 
         // Choose the best move based on the tree
         Node bestChild = getBestChild(root);
+        System.out.println(bestChild.action);
         return bestChild.action;
     }
 

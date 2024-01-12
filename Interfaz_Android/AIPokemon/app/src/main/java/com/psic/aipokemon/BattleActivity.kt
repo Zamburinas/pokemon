@@ -140,7 +140,7 @@ class BattleActivity : ComponentActivity() {
 
         val availablePokemons: List<Pokemon> = PokemonDataReader.createAvailablePokemons(jsonString,jsonStringMove)
         val typeTable: Map<String, Map<String, Double>> = PokemonDataReader.createTypeTable(jsonStringTable)
-
+        Battle.typeTable = typeTable
         val player = Player("Ash")
         val IA = Player("IA")
         IA.team.clear()
@@ -170,7 +170,7 @@ class BattleActivity : ComponentActivity() {
 
         println("Initiating combat...")
         printLogMessage("Initiating combat...")
-        val battle = Battle(player, IA, typeTable)
+        val battle = Battle(player, IA)
 
         val pokemonsField: Array<String> =battle.start()
 
@@ -383,11 +383,12 @@ class BattleActivity : ComponentActivity() {
             //No voy a implmentar lo de los PP/MoveIndex para no complicarme queda para hacer
             //movimiento de la IA random
 
-            battle.resolveTurn(
+            Battle.resolveTurn(
                 player.getCurrentPokemon(),
                 IA.getCurrentPokemon(),
                 movement,
-                selectedMove2
+                selectedMove2,
+                true
             )
             //Aquí se ha resuelto el turno
             battle.messages.procesarMensajes(battle)
@@ -409,11 +410,12 @@ class BattleActivity : ComponentActivity() {
                 battle.messages.add("Switching from " + oldPokemon + " to " + chosenPokemon.name)
                 battle.chat.add("Switching from " + oldPokemon + " to " + chosenPokemon.name)
 
-                battle.resolveTurn(
+                Battle.resolveTurn(
                     player.getCurrentPokemon(),
                     IA.getCurrentPokemon(),
                     -1,
-                    selectedMove2
+                    selectedMove2,
+                    true
                 )
 
                 battle.messages.procesarMensajes(battle)

@@ -85,8 +85,9 @@ public class PokemonBattleState implements Cloneable {
 
     public double getScore(PokemonBattleState state) {    
         double diffHealth = player2.getTeamHealth() - player1.getTeamHealth();
+        
         double mediumPoints = 50 * ((double) ((state.getPlayer1().getRemainingPokemons() - player1.getRemainingPokemons()) - (state.getPlayer2().getRemainingPokemons() - player2.getRemainingPokemons())));
-
+        System.out.println(diffHealth +" " + mediumPoints);
         
         double battleOver = 0;
         if (Battle.isBattleOver(player1, player2) != 0)
@@ -137,6 +138,7 @@ public class PokemonBattleState implements Cloneable {
                 legalActionsBest.add(i);
             }
         }
+        System.out.println(player2Playing.getPlayerName() + " " + legalActionsBest + player2Playing.getCurrentPokemon().getName());
         if (legalActionsBest.size() > 0)
             return legalActionsBest.get(new Random().nextInt(legalActionsBest.size()));
 

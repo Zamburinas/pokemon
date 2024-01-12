@@ -283,7 +283,9 @@ public class Battle {
         return 0;
     }
 
-
+    public int isBattleOver() {
+        return isBattleOver(player1, player2);
+    }
     public static int isBattleOver(Player player1Pokemon, Player player2Pokemon) {
         boolean allPlayer1PokemonsFainted = true;
         boolean allPlayer2PokemonsFainted = true;

@@ -191,7 +191,7 @@ public class Battle {
         double normalDamage = (((2 * attacker.getLevel() + 10) / 250.0) * (attack / defense) * move.getPower());
         double damage = normalDamage * modifier;
         double damageDone;
-        if (log) {
+        if (true) {
             damageDone = damage <= defender.remainingHealth() ? (damage * 100.0) / defender.getMaxHealthPoints() : (defender.remainingHealth() * 100.0) / defender.getMaxHealthPoints();
         } else {
             damageDone = (damage * 100.0) / defender.getMaxHealthPoints();

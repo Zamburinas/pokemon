@@ -1,7 +1,7 @@
+package com.psic.aipokemon.core.src;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 public class PokemonBattleState implements Cloneable {
     private Player player1;
     private Player player2;
