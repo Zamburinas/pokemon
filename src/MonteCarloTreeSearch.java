@@ -3,12 +3,12 @@ import java.util.List;
 import java.util.Random;
 
 public class MonteCarloTreeSearch {
-    private static final int SIMULATION_COUNT = 1000;
+    private static final int SIMULATION_COUNT = 5000;
     public static final int repetitionMax = 15;
     private static final double EXPLORATION_PARAMETER = 1.4;
     private static final double MAX_SCORE = 100;
     private static final double MIN_SCORE = 0;
-    private static final int MIN_VISITS = 5;
+    private static final int MIN_VISITS = 15;
     /**
      * Find the best move using Monte Carlo Tree Search.
      * @param initialState The initial state of the game.
@@ -47,7 +47,7 @@ public class MonteCarloTreeSearch {
         Node nodeAux = node;
         while (nodeAux.children.size() > 0) {
             for (int i = 0; i < nodeAux.children.size(); i++){
-                if (nodeAux.children.get(i).visits < 4) {
+                if (nodeAux.children.get(i).visits < MIN_VISITS) {
                     return expand(nodeAux);
                 }
             }
