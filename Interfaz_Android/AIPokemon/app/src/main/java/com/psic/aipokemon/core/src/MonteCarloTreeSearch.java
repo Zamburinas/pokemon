@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 public class MonteCarloTreeSearch {
-    private static final int SIMULATION_COUNT = 1000;
+    private static final int SIMULATION_COUNT = 5000;
     public static final int repetitionMax = 15;
     private static final double EXPLORATION_PARAMETER = 1.4;
     private static final double MAX_SCORE = 100;
