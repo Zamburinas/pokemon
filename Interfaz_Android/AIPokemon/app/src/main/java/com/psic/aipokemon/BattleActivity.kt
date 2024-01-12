@@ -69,7 +69,7 @@ class BattleActivity : ComponentActivity() {
     private lateinit var layoutBattle: View
     private lateinit var layoutChat: View
     private var turno = 0
-
+    private lateinit var music:MediaPlayer;
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,12 +103,13 @@ class BattleActivity : ComponentActivity() {
         }
 
         val mediaPlayer = MediaPlayer.create(this, R.raw.battle)
+        music = mediaPlayer
         mediaPlayer?.isLooping = true
         mediaPlayer?.start()
 
         val button2 = layoutBattle.findViewById<ImageView>(R.id.buttonCross)
         button2.setOnClickListener {
-            showExitConfirmationDialog()
+            showExitConfirmationDialog(mediaPlayer)
         }
         val muteButton = layoutBattle.findViewById<ImageView>(R.id.muteButton)
 
@@ -675,14 +676,16 @@ class BattleActivity : ComponentActivity() {
         //Ver si se acabó
         if (battle.isBattleOver == 1) {
             //Ganas tu
-
+            music?.stop()
+            music?.release()
             val intent = Intent(this@BattleActivity, FinalActivity::class.java)
             intent.putExtra("string", "You WIN")
             startActivity(intent)
 
         } else if (battle.isBattleOver == 2) {
             //Gana la Ia
-
+            music?.stop()
+            music?.release()
             val intent = Intent(this@BattleActivity, FinalActivity::class.java)
             intent.putExtra("string", "You LOST")
             startActivity(intent)
@@ -785,11 +788,13 @@ class BattleActivity : ComponentActivity() {
     }
 
 
-    fun showExitConfirmationDialog() {
+    fun showExitConfirmationDialog(mediaPlayer:MediaPlayer) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Salir de la partida")
         builder.setMessage("¿Seguro que quieres salir de la partida?")
         builder.setPositiveButton("Confirmar") { _, _ ->
+            mediaPlayer?.stop()
+            mediaPlayer?.release()
             // Acción al confirmar
             val intent = Intent(this, OptionsActivity::class.java)
             startActivity(intent)

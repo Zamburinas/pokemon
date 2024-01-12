@@ -32,16 +32,16 @@
             android:text="Button 1"
             android:textColor="#FFFFFF"
             android:src="@drawable/mute_icon_icons_com_69340"
-            android:layout_marginLeft="140sp"
+            android:layout_marginLeft="170sp"
             android:clickable="true"
             />
 
         <!-- Botón 2 -->
         <ImageView
             android:id="@+id/buttonCross"
-            android:layout_width="80dp"
+            android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="10sp"
+            android:layout_marginLeft="20sp"
             android:textColor="@android:color/white"
             android:src="@drawable/cross"
             android:clickable="true"/>
@@ -69,7 +69,7 @@
             >
 
             <View
-                android:layout_width="40dp"
+                android:layout_width="50dp"
                 android:layout_height="70dp"
                 android:background="@drawable/player"
                 android:layout_gravity="center"
@@ -332,14 +332,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@id/attacksContainer"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="100dp"
         android:gravity="center">
 
         <!-- Botón 1 -->
         <Button
             android:id="@+id/button1"
             android:layout_width="105dp"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:padding="5dp"
             android:gravity="center"
             android:textColor="@android:color/white" />
@@ -348,7 +348,7 @@
         <Button
             android:id="@+id/button2"
             android:layout_width="105dp"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:padding="5dp"
             android:gravity="center"
             android:textColor="@android:color/white" />
@@ -357,7 +357,7 @@
         <Button
             android:id="@+id/button3"
             android:layout_width="105dp"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:padding="5dp"
             android:gravity="center"
             android:textColor="@android:color/white" />

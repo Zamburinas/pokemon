@@ -49,14 +49,14 @@ public class PokemonBattleState implements Cloneable {
         // PokemonBattleState newState = new PokemonBattleState(this);
         int pokemon2move = getAction(player2, player1);
         if (action >= 0 && action < 4 && !player2.getCurrentPokemon().isDead()) {
-            Battle.resolveTurn(player1.getCurrentPokemon(), player2.getCurrentPokemon(), action, pokemon2move, false);
+            Battle.resolveTurn(player1.getCurrentPokemon(), player2.getCurrentPokemon(), pokemon2move, action, false);
             if (player2.getCurrentPokemon().isDead()) {
                 this.isTerminal = true;
             }
         } else{
             Pokemon newPokemon = getPlayer2().getPokemonFromTeam(action);
             switchActivePokemon(player2, newPokemon);
-            Battle.resolveTurn(player2.getCurrentPokemon(), player2.getCurrentPokemon(), -1, pokemon2move, false);
+            Battle.resolveTurn(player2.getCurrentPokemon(), player2.getCurrentPokemon(), pokemon2move, -1, false);
         }
     }
 
@@ -87,7 +87,6 @@ public class PokemonBattleState implements Cloneable {
         double diffHealth = player2.getTeamHealth() - player1.getTeamHealth();
         
         double mediumPoints = 50 * ((double) ((state.getPlayer1().getRemainingPokemons() - player1.getRemainingPokemons()) - (state.getPlayer2().getRemainingPokemons() - player2.getRemainingPokemons())));
-        System.out.println(diffHealth +" " + mediumPoints);
         
         double battleOver = 0;
         if (Battle.isBattleOver(player1, player2) != 0)
@@ -135,13 +134,12 @@ public class PokemonBattleState implements Cloneable {
 
         for(int i = 0; i < legalActions.size(); i++) {
             if (getEffectiveness(moves[legalActions.get(i)], player1Playing.getCurrentPokemon()) == bestTypeDamage) {
-                legalActionsBest.add(i);
+                legalActionsBest.add(legalActions.get(i));
             }
         }
-        System.out.println(player2Playing.getPlayerName() + " " + legalActionsBest + player2Playing.getCurrentPokemon().getName());
-        if (legalActionsBest.size() > 0)
+        if (legalActionsBest.size() > 0) {
             return legalActionsBest.get(new Random().nextInt(legalActionsBest.size()));
-
+        }
         return legalActions.get(new Random().nextInt(legalActions.size()));
     }
 

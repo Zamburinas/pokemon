@@ -7,11 +7,21 @@
 
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/letras"
+        android:layout_width="290dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"
         android:layout_marginBottom="200sp"
-        android:text="IA Battle Pokémon"
+        android:background="@drawable/letras"
+        android:textSize="36sp" />
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="200sp"
+        android:text="IA Battles"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="75dp"
         android:textSize="36sp" />
 
     <Button
@@ -19,10 +29,11 @@
         android:layout_width="200sp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="#4D929A"
+        android:background="#FF0000"
         android:text="Start"
         android:textAlignment="center"
-        android:textSize="50sp" />
+        android:textSize="50sp"
+        android:layout_marginTop="200dp"/>
 
 
 

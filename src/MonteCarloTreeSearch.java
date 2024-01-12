@@ -8,6 +8,7 @@ public class MonteCarloTreeSearch {
     private static final double EXPLORATION_PARAMETER = 1.4;
     private static final double MAX_SCORE = 100;
     private static final double MIN_SCORE = 0;
+    private static final int MIN_VISITS = 5;
     /**
      * Find the best move using Monte Carlo Tree Search.
      * @param initialState The initial state of the game.
@@ -28,15 +29,11 @@ public class MonteCarloTreeSearch {
             if (expandedNode.action == -1) {
                 repetition++;
             }
-            System.out.println("Expanded: " + expandedNode.action + " " + expandedNode.totalScore/expandedNode.visits + " " + expandedNode.visits);
-            System.out.println("Root: " + root.children.size() + " " + root.getUntriedActions());
             Node best =  getBestChild(root);
-            System.out.println("Best: " + best.action + " " + best.totalScore/best.visits);
         }
 
         // Choose the best move based on the tree
         Node bestChild = getBestChild(root);
-        System.out.println(bestChild.action);
         return bestChild.action;
     }
 
@@ -50,7 +47,7 @@ public class MonteCarloTreeSearch {
         Node nodeAux = node;
         while (nodeAux.children.size() > 0) {
             for (int i = 0; i < nodeAux.children.size(); i++){
-                if (nodeAux.children.get(i).visits == 0) {
+                if (nodeAux.children.get(i).visits < 4) {
                     return expand(nodeAux);
                 }
             }
@@ -88,12 +85,8 @@ public class MonteCarloTreeSearch {
     private double simulate(Node node) {
         PokemonBattleState state = node.state;
         while (!state.isTerminal()) {
-            List<Integer> legalActions = state.getLegalActions();
-            // int nextAction = state.getAction();
-            // int nextAction = new Random().nextInt(legalActions.size());
-            int randomAction = legalActions.get(state.getAction());
             state = new PokemonBattleState(state);
-            state.performAction(randomAction);
+            state.performAction(state.getAction());
         }
         double score = state.getScore(node.state) + node.damageDone;
         if (node.action != -1 &&  score > 0) {
