@@ -58,7 +58,7 @@
     "Poison": 0.5,
     "Ground": 0.5,
     "Rock": 0.5,
-    "Bug": 2,
+    "Bug": 1,
     "Ghost": 0.5,
     "Fire": 1,
     "Water": 1,
@@ -107,11 +107,11 @@
     "Normal": 1,
     "Fighting": 0.5,
     "Flying": 0.5,
-    "Poison": 2,
+    "Poison": 0.5,
     "Ground": 1,
     "Rock": 1,
     "Bug": 1,
-    "Ghost": 1,
+    "Ghost": 0.5,
     "Fire": 0.5,
     "Water": 1,
     "Grass": 2,
@@ -231,7 +231,7 @@
       "Rock": 1,
       "Bug": 1,
       "Ghost": 1,
-      "Fire": 1,
+      "Fire": 0.5,
       "Water": 0.5,
       "Grass": 2,
       "Electric": 1,
@@ -274,5 +274,3 @@
       "Dragon": 1
     }
 }
-
-      

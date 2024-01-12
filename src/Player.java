@@ -86,6 +86,7 @@ public class Player {
     }
 
     public void setCurrentPokemon(Pokemon currentPokemon) {
+        currentPokemon.shown = true;
         this.currentPokemon = currentPokemon;
     }
 
@@ -94,6 +95,16 @@ public class Player {
         for (int i = 0; i < team.size(); i++) {
             if (!team.get(i).isDead()) {
                 remaining++;
+            }
+        }
+        return remaining;
+    }
+
+    public List<Integer> getRemainingChange() {
+        List<Integer> remaining = new ArrayList<>();
+        for (int i = 0; i < team.size(); i++) {
+            if (!team.get(i).isDead() && team.get(i) != currentPokemon) {
+                remaining.add(i);
             }
         }
         return remaining;

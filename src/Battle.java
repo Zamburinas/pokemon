@@ -8,13 +8,14 @@ import java.util.Scanner;
 public class Battle {
     private Player player1;
     private Player player2;
-    private int turnCounter = 0;
+    public static int turnCounter = 0;
     public static Map<String, Map<String,Double>> typeTable;
     private static final int pokemonChange = -1;
 
     public Battle(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
+        turnCounter = 0;
     }
 
     public void start() {
@@ -48,7 +49,9 @@ public class Battle {
     private void playerTurn() {
         turnCounter++;
         logMessage("Turn: " + turnCounter);
-        while(player2.getCurrentPokemon().isDead()) player2.setPokemonFromTeam(new Random().nextInt(3));
+        if (player2.getCurrentPokemon().isDead()) {
+            player2.setPokemonFromTeam(new MonteCarloTreeSearch().findBestMove(new PokemonBattleState(player1, player2)));
+        }
         double healthPercentage2 = ((double) player2.getCurrentPokemon().getStats().getHealthPoints() / player2.getCurrentPokemon().getMaxHealthPoints()) * 100;
         logMessage("AI Pokémon: " + player2.getCurrentPokemon().getName() + " (" + String.format("%.2f", healthPercentage2) + "% HP)");
         int[] range = RandomSpeed(player2.getCurrentPokemon().getSpeed(), 30);
@@ -176,7 +179,7 @@ public class Battle {
         double accuracy = move.getAccuracy();
         boolean attackHits = new Random().nextDouble() * 100 <= accuracy;
         
-        if (!attackHits) {
+        if (!attackHits && log) {
             if (log)
                 logMessage(attacker.getName() + " tried to use " + move.getName() + " but it missed!");
             return 0; // Retorna 0 si el ataque falla
@@ -186,7 +189,7 @@ public class Battle {
         double attack = (double) attacker.getAttack(move.getCategory());
         double defense = (double) defender.getDefense(move.getCategory());
         double normalDamage = (((2 * attacker.getLevel() + 10) / 250.0) * (attack / defense) * move.getPower());
-        double damage=normalDamage * modifier;
+        double damage = normalDamage * modifier;
         double damageDone = damage <= defender.remainingHealth() ? (damage * 100.0) / defender.getMaxHealthPoints() : (defender.remainingHealth() * 100.0) / defender.getMaxHealthPoints();
         if (log)
             logMessage(String.format(Locale.US, "%s used %s dealing %.2f %% damage to %s", attacker.getName(), move.getName(), damageDone, defender.getName()));

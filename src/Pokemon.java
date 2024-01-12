@@ -6,6 +6,7 @@ public class Pokemon {
     private Move[] moves;
     private Status status;
     private boolean isDead = false;
+    public boolean shown = false;
 
     public Pokemon(String name, String primaryType, int level, int healthPoints, int attack, int defense, int special, int specialDefense, int speed) {
         this.name = name;
@@ -14,6 +15,7 @@ public class Pokemon {
         this.stats = new Stats(level, healthPoints, attack, defense, special, specialDefense, speed);
         this.moves = new Move[4];
         this.status = new Status("normal", -1, 100, null);
+        this.shown = false;
     }
 
     public Pokemon(String name, String primaryType, String secondaryType, int level, int healthPoints, int attack, int defense, int special, int specialDefense, int speed) {
@@ -23,6 +25,7 @@ public class Pokemon {
         this.stats = new Stats(level, healthPoints, attack, defense, special, specialDefense, speed);
         this.moves = new Move[4];
         this.status = new Status("normal", -1, 100, null);
+        this.shown = false;
     }
 
     public Pokemon(Pokemon pokemon){
@@ -36,8 +39,9 @@ public class Pokemon {
         for (int i = 0; i < 4; i++) {
             this.moves[i] = new Move(copyMoves[i]);
         }
+        this.shown = pokemon.getShown();
     }
-
+    
     public Pokemon() {
         this.isDead = true;
     }
@@ -46,6 +50,9 @@ public class Pokemon {
         return this.stats;
     }
 
+    public boolean getShown() {
+        return shown;
+    }
     public void setStats(Stats stats) {
         this.stats = stats;
     }

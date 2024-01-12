@@ -5,7 +5,8 @@ import java.util.Random;
 public class MonteCarloTreeSearch {
     private static final int SIMULATION_COUNT = 1000;
     private static final double EXPLORATION_PARAMETER = 1.4;
-
+    private static final double MAX_SCORE = 33.33 * 3 + 100;
+    private static final double MIN_SCORE = 0;
     /**
      * Find the best move using Monte Carlo Tree Search.
      * @param initialState The initial state of the game.
@@ -19,10 +20,14 @@ public class MonteCarloTreeSearch {
             Node expandedNode = expand(selectedNode);
             double simulationResult = simulate(expandedNode);
             backpropagate(expandedNode, simulationResult);
+            System.out.println("Expanded: " + expandedNode.action + " " + expandedNode.totalScore/expandedNode.visits + " " + expandedNode.visits);
+            System.out.println("Root: " + root.children.size() + " " + root.getUntriedActions());
+            System.out.println("Best: " + getBestChild(root).action + " " + getBestChild(root).totalScore/getBestChild(root).visits);
         }
 
         // Choose the best move based on the tree
         Node bestChild = getBestChild(root);
+        System.out.println(bestChild.action);
         return bestChild.action;
     }
 
@@ -41,6 +46,9 @@ public class MonteCarloTreeSearch {
                 }
             }
             nodeAux = nodeAux.bestChild(EXPLORATION_PARAMETER);
+            if (!nodeAux.state.isTerminal() && node.getUntriedActions().isEmpty()) {
+                return nodeAux; // Explicitly expand if the best child has not been expanded
+            }
         }
         return node;
     }
@@ -52,11 +60,10 @@ public class MonteCarloTreeSearch {
      */
     private Node expand(Node node) {
         List<Integer> untriedActions = node.getUntriedActions();
-        if (!untriedActions.isEmpty()) {
+        if (!untriedActions.isEmpty() && !node.state.isTerminal()) {
             int randomAction = untriedActions.remove(new Random().nextInt(untriedActions.size()));
             PokemonBattleState nextState = node.state.performAction(randomAction);
-            Node child = new Node(nextState, node);
-            child.action = randomAction;
+            Node child = new Node(nextState, node, randomAction);
             node.children.add(child);
             return child;
         }
@@ -72,11 +79,22 @@ public class MonteCarloTreeSearch {
         PokemonBattleState state = node.state;
         while (!state.isTerminal()) {
             List<Integer> legalActions = state.getLegalActions();
+            // int nextAction = state.getAction();
             int nextAction = new Random().nextInt(legalActions.size());
             int randomAction = legalActions.get(nextAction);
             state = state.performAction(randomAction);
         }
-        return state.getScore();
+        if (node.action != -1) {
+            System.out.println(node.state.getPlayer2().getCurrentPokemon().getMoves()[node.action].getAccuracy()/100.0);
+            System.out.println(node.state.getPlayer2().getCurrentPokemon().getMoves()[node.action].getName());
+        }
+        if (node.action != -1 && state.getScore(node.state) > 0) {
+            return state.getScore(node.state) * node.state.getPlayer2().getCurrentPokemon().getMoves()[node.action].getAccuracy()/100.0;
+        } else if (node.action != -1 && state.getScore(node.state) < 0) {
+            double accuracy = node.state.getPlayer2().getCurrentPokemon().getMoves()[node.action].getAccuracy()/100.0;
+            return state.getScore(node.state) * (1 + 1 - accuracy) ;
+        }
+        return state.getScore(node.state);
     }
 
     /**
@@ -118,10 +136,16 @@ public class MonteCarloTreeSearch {
             this.parent = null;
             this.state = state;
             this.children = new ArrayList<>();
+            this.action = -1;
         }
 
-        Node(PokemonBattleState state, Node parent) {
+        Node(PokemonBattleState state, int action) {
             this(state);
+            this.action = action;
+        }
+
+        Node(PokemonBattleState state, Node parent, int action) {
+            this(state, action);
             this.parent = parent;
         }
         /**
@@ -155,9 +179,11 @@ public class MonteCarloTreeSearch {
             double bestValue = Double.NEGATIVE_INFINITY;
             Node bestChild = null;
             for (Node child : children) {
-                double exploitation = (child.totalScore / child.visits);
+                double normalizedScore = (child.totalScore - MIN_SCORE) / (MAX_SCORE - MIN_SCORE + 1.0);
+                // Calculate exploitation and exploration terms
+                double exploitation = (normalizedScore / child.visits);
                 double exploration = Math.sqrt(Math.log(visits) / child.visits);
-                double value = exploitation + explorationParameter * exploration;
+                double value = exploitation + exploration + Math.random() * explorationParameter/5;
                 if (value > bestValue) {
                     bestValue = value;
                     bestChild = child;
