@@ -21,6 +21,8 @@ public class Battle {
     public Battle(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
+        messages = new ArrayList<>();
+        chat = new ArrayList<>();
     }
 
     public String[] start() {
@@ -129,45 +131,43 @@ public class Battle {
         Pokemon fasterPokemon = pokemonPlayer1, slowerPokemon = pokemonPlayer2;
         int fastMove = move1, slowMove = move2;
         Move move;
-        if (((pokemonPlayer2.getSpeed() > pokemonPlayer1.getSpeed() || (pokemonPlayer2.getSpeed() == pokemonPlayer1.getSpeed() && new Random().nextDouble() >= 0.5)) && move2 != pokemonChange)  || move1 == pokemonChange) {
+        boolean sameSpeed = pokemonPlayer2.getSpeed() == pokemonPlayer1.getSpeed() && new Random().nextDouble() >= 0.5;
+        boolean p2Faster = pokemonPlayer2.getSpeed() > pokemonPlayer1.getSpeed();
+        if (((p2Faster || (sameSpeed || !log)) && move2 != pokemonChange)  || move1 == pokemonChange) {
             fasterPokemon = pokemonPlayer2;
             slowerPokemon = pokemonPlayer1;
             fastMove = move2;
             slowMove = move1;
         }
 
-        if(!(fastMove==-1)) {
-            move = fasterPokemon.useMove(fastMove);
-            double damage = calculateDamage(fasterPokemon, slowerPokemon, move, log);
+        move = fasterPokemon.useMove(fastMove);
+        double damage = calculateDamage(fasterPokemon, slowerPokemon, move, log);
 
-            applyPassiveEffect(fasterPokemon, slowerPokemon, move, log);
-            if (slowerPokemon.receiveDamage(damage)) {
-                slowerPokemon.die();
-                if (log) {
-                    logMessage(slowerPokemon.getName() + " fainted!");
-                    addArrays(slowerPokemon.getName() + " fainted!");
-                }
-                
-                return;
+        applyPassiveEffect(fasterPokemon, slowerPokemon, move, log);
+        if (slowerPokemon.receiveDamage(damage)) {
+            slowerPokemon.die();
+            if (log) {
+                logMessage(slowerPokemon.getName() + " fainted!");
+                addArrays(slowerPokemon.getName() + " fainted!");
             }
-            if (slowMove == pokemonChange) {
-                return;
-            }
+
+            return;
         }
-        if(!(slowMove==-1)) {
-            move = slowerPokemon.useMove(slowMove);
-            double damage = calculateDamage(slowerPokemon, fasterPokemon, move, log);
+        if (slowMove == pokemonChange) {
+            return;
+        }
+        move = slowerPokemon.useMove(slowMove);
+        damage = calculateDamage(slowerPokemon, fasterPokemon, move, log);
 
-            applyPassiveEffect(slowerPokemon, fasterPokemon, move, log);
-            if (fasterPokemon.receiveDamage(damage)) {
-                fasterPokemon.die();
-                if (log) {
-                    logMessage(fasterPokemon.getName() + " fainted!");
-                    addArrays(fasterPokemon.getName() + " fainted!");
-                }
-                
-                return;
+        applyPassiveEffect(slowerPokemon, fasterPokemon, move, log);
+        if (fasterPokemon.receiveDamage(damage)) {
+            fasterPokemon.die();
+            if (log) {
+                logMessage(fasterPokemon.getName() + " fainted!");
+                addArrays(fasterPokemon.getName() + " fainted!");
             }
+
+            return;
         }
     }
     

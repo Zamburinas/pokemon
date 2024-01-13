@@ -47,16 +47,16 @@ public class PokemonBattleState implements Cloneable {
 
     public void performAction(int action) {
         // PokemonBattleState newState = new PokemonBattleState(this);
-        int pokemon2move = getAction(player2, player1);
+        int pokemon1move = getAction(player2, player1);
         if (action >= 0 && action < 4 && !player2.getCurrentPokemon().isDead()) {
-            Battle.resolveTurn(player1.getCurrentPokemon(), player2.getCurrentPokemon(), pokemon2move, action, false);
+            Battle.resolveTurn(player1.getCurrentPokemon(), player2.getCurrentPokemon(), pokemon1move, action, false);
             if (player2.getCurrentPokemon().isDead()) {
                 this.isTerminal = true;
             }
         } else{
             Pokemon newPokemon = getPlayer2().getPokemonFromTeam(action);
             switchActivePokemon(player2, newPokemon);
-            Battle.resolveTurn(player2.getCurrentPokemon(), player2.getCurrentPokemon(), pokemon2move, -1, false);
+            Battle.resolveTurn(player1.getCurrentPokemon(), player2.getCurrentPokemon(), pokemon1move, -1, false);
         }
     }
 

@@ -133,7 +133,9 @@ public class Battle {
         Pokemon fasterPokemon = pokemonPlayer1, slowerPokemon = pokemonPlayer2;
         int fastMove = move1, slowMove = move2;
         Move move;
-        if (((pokemonPlayer2.getSpeed() > pokemonPlayer1.getSpeed() || (pokemonPlayer2.getSpeed() == pokemonPlayer1.getSpeed() && new Random().nextDouble() >= 0.5)) && move2 != pokemonChange)  || move1 == pokemonChange) {
+        boolean sameSpeed = pokemonPlayer2.getSpeed() == pokemonPlayer1.getSpeed() && new Random().nextDouble() >= 0.5;
+        boolean p2Faster = pokemonPlayer2.getSpeed() > pokemonPlayer1.getSpeed();
+        if (((p2Faster || (sameSpeed || !log)) && move2 != pokemonChange)  || move1 == pokemonChange) {
             fasterPokemon = pokemonPlayer2;
             slowerPokemon = pokemonPlayer1;
             fastMove = move2;
