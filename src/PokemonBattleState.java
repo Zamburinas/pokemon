@@ -37,6 +37,8 @@ public class PokemonBattleState implements Cloneable {
     }
 
     public boolean isTerminal() {
+        if (getLegalActions().isEmpty())
+            return true;
         for (int i = 0; i < player1.getTeam().size(); i++){
             if (player1.getTeam().get(i).getShown() && !player1.getTeam().get(i).isDead()) {
                 return false || Battle.isBattleOver(player1, player2) != 0 || isTerminal;

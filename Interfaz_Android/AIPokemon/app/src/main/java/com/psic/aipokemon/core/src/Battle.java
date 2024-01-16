@@ -1,5 +1,7 @@
 package com.psic.aipokemon.core.src;
 
+import android.util.Log;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+import java.security.SecureRandom;
 
 public class Battle {
     private Player player1;
@@ -14,7 +17,7 @@ public class Battle {
     private int turnCounter = 0;
     public static Map<String, Map<String,Double>> typeTable;
     private static final int pokemonChange = -1;
-
+    public static SecureRandom random = new SecureRandom();
     private static ArrayList<String> messages = new ArrayList<>();
     private static ArrayList<String> chat = new ArrayList<>();
 
@@ -23,6 +26,7 @@ public class Battle {
         this.player2 = player2;
         messages = new ArrayList<>();
         chat = new ArrayList<>();
+        random = new SecureRandom();
     }
 
     public String[] start() {
@@ -32,11 +36,9 @@ public class Battle {
         player1.setCurrentPokemon(player1.getPokemonFromTeam(0));
         player2.setCurrentPokemon(player2.getPokemonFromTeam(0));
         logMessage(player1.getPlayerName() + " sends out " + player1.getCurrentPokemon().getName() + " to the field!");
-        addArrays(player1.getPlayerName() + " sends out " + player1.getCurrentPokemon().getName() + " to the field!");
         logMessage(player2.getPlayerName() + " sends out " + player2.getCurrentPokemon().getName() + " to the field!");
-        addArrays(player2.getPlayerName() + " sends out " + player2.getCurrentPokemon().getName() + " to the field!");
         int[] range = RandomSpeed(player2.getCurrentPokemon().getSpeed(), 30);
-        logMessage("Speed:   "+range[0]+"-"+range[1]);        
+        // logMessage("Speed:   "+range[0]+"-"+range[1]);
         return new String[]{player1.getCurrentPokemon().getName(), player2.getCurrentPokemon().getName(),""+range[0],""+range[1]};
 
 
@@ -76,7 +78,7 @@ public class Battle {
                         Move[] moves = player1.getCurrentPokemon().getMoves();
                         for (int i = 0; i < moves.length; i++) {
                             if (player1Pokemon.isMoveAvailable(i)) {
-                                logMessage((i + 1) + ". " + player1Pokemon.getMoves()[i].getInfo(), false);
+                                // logMessage((i + 1) + ". " + player1Pokemon.getMoves()[i].getInfo(), false);
                                 logMessage(player1Pokemon.getMoves()[i].getMoveStats());
                             }
                         }
@@ -105,8 +107,7 @@ public class Battle {
                         logMessage("Invalid choice. Please choose again.");
             }
         } while (!(selectedMove1 != -1 || pokemonSwitched));
-    
-        
+
         MonteCarloTreeSearch mcts = new MonteCarloTreeSearch();
         selectedMove2 = mcts.findBestMove(new PokemonBattleState(player1, player2));
         resolveTurn(player1.getCurrentPokemon(), player2.getCurrentPokemon(), selectedMove1, selectedMove2, true);
@@ -148,7 +149,6 @@ public class Battle {
             slowerPokemon.die();
             if (log) {
                 logMessage(slowerPokemon.getName() + " fainted!");
-                addArrays(slowerPokemon.getName() + " fainted!");
             }
 
             return;
@@ -164,7 +164,6 @@ public class Battle {
             fasterPokemon.die();
             if (log) {
                 logMessage(fasterPokemon.getName() + " fainted!");
-                addArrays(fasterPokemon.getName() + " fainted!");
             }
 
             return;
@@ -188,7 +187,6 @@ public class Battle {
         
         if (!attackHits && log) {
             logMessage(attacker.getName() + " tried to use " + move.getName() + " but it missed!");
-            addArrays(attacker.getName() + " tried to use " + move.getName() + " but it missed!");
             return 0; // Retorna 0 si el ataque falla
         }
         
@@ -205,20 +203,17 @@ public class Battle {
         }
         if (!move.getName().equalsIgnoreCase("Soft Boiled") && !move.getName().equalsIgnoreCase("Synthesis") && log) {
             logMessage(String.format(Locale.US, "%s used %s dealing %.2f %% damage to %s", attacker.getName(), move.getName(), damageDone, defender.getName()));
-            addArrays(String.format(Locale.US, "%s used %s dealing %.2f %% damage to %s", attacker.getName(), move.getName(), damageDone, defender.getName()));
         }
 
         if(typeDamage>=2 && log){
             if (!move.getName().equalsIgnoreCase("Soft Boiled") && !move.getName().equalsIgnoreCase("Synthesis")) {
                 logMessage("It's super effective!");
-                addArrays("It's super effective!");
             }
         }
 
         if (critical == 2 && modifier != 0 && log) {
             if (!move.getName().equalsIgnoreCase("Soft Boiled") && !move.getName().equalsIgnoreCase("Synthesis")) {
                 logMessage("Critical Damage!");
-                addArrays("Critical Damage!");
             }
         }
         return damage;
@@ -248,7 +243,6 @@ public class Battle {
                             ownPokemon.receiveDamage(ownPokemon.remainingHealth());
                             if (log) {
                                 logMessage(ownPokemon.getName() + " used " + move.getName() + ", sacrificing itself!");
-                                addArrays(ownPokemon.getName() + " used " + move.getName() + ", sacrificing itself!");
                             }
                             return true;
                         }
@@ -262,7 +256,6 @@ public class Battle {
                             double percRestHealth = restoredHealthh/ownPokemon.getMaxHealthPoints()*100;
                             if (log) {
                                 logMessage(ownPokemon.getName() + " used " + move.getName() + ", restoring " + formato.format(percRestHealth) + "% of its health!");
-                                addArrays(ownPokemon.getName() + " used " + move.getName() + ", restoring " + formato.format(percRestHealth) + "% of its health!");
                             }
                             return false;
                         }
@@ -363,15 +356,13 @@ public class Battle {
     }
     
 
-    public static void logMessage(String message) { System.out.println(message); }
+    public static void logMessage(String message) {
+        messages.add(message);
+        chat.add(message);
+    }
 
     public static void logMessage(String message, boolean newLine) {
         System.out.print(message);
-    }
-
-    public static void addArrays(String message) {
-        messages.add(message);
-        chat.add(message);
     }
     public static int[] RandomSpeed(int num, int range) {
         Random random = new Random();

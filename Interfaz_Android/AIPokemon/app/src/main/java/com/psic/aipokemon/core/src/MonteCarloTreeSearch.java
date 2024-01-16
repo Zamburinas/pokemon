@@ -1,15 +1,16 @@
 package com.psic.aipokemon.core.src;
+import android.util.Log;
+
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 public class MonteCarloTreeSearch {
     private static final int SIMULATION_COUNT = 5000;
     public static final int repetitionMax = 15;
     private static final double EXPLORATION_PARAMETER = 1.4;
     private static final double MAX_SCORE = 100;
     private static final double MIN_SCORE = 0;
-    private static final int MIN_VISITS = 15;
+    private static final int MIN_VISITS = 50;
     /**
      * Find the best move using Monte Carlo Tree Search.
      * @param initialState The initial state of the game.
@@ -33,7 +34,11 @@ public class MonteCarloTreeSearch {
         }
 
         // Choose the best move based on the tree
+
         Node bestChild = getBestChild(root);
+        if (bestChild == null) {
+            return initialState.getLegalActions().get(new SecureRandom().nextInt(initialState.getLegalActions().size()));
+        }
         return bestChild.action;
     }
 
@@ -73,7 +78,7 @@ public class MonteCarloTreeSearch {
     private Node expand(Node node) {
         List<Integer> untriedActions = node.getUntriedActions();
         if (!untriedActions.isEmpty() && !node.state.isTerminal()) {
-            int randomAction = untriedActions.remove(new Random().nextInt(untriedActions.size()));
+            int randomAction = untriedActions.remove(Battle.random.nextInt(untriedActions.size()));
             PokemonBattleState nextState = new PokemonBattleState(node.state);
             nextState.performAction(randomAction);
             Node child = new Node(nextState, node, randomAction, node.state.getPlayer1().getCurrentPokemon().getStats().getHealthPoints() - nextState.getPlayer1().getCurrentPokemon().getStats().getHealthPoints());
@@ -94,7 +99,7 @@ public class MonteCarloTreeSearch {
             state = new PokemonBattleState(state);
             state.performAction(state.getAction());
         }
-        double score = state.getScore(node.state) + node.damageDone*4;
+        double score = state.getScore(node.state) + node.damageDone*2;
         if (node.action != -1 &&  score > 0) {
             return score * node.state.getPlayer2().getCurrentPokemon().getMoves()[node.action].getAccuracy()/100.0;
         } else if (node.action != -1 && score < 0) {
@@ -205,3 +210,4 @@ public class MonteCarloTreeSearch {
         }
     }
 }
+

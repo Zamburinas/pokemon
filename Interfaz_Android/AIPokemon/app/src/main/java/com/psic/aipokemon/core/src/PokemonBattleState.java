@@ -1,8 +1,6 @@
 package com.psic.aipokemon.core.src;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 public class PokemonBattleState implements Cloneable {
     private Player player1;
     private Player player2;
@@ -38,6 +36,8 @@ public class PokemonBattleState implements Cloneable {
     }
 
     public boolean isTerminal() {
+        if (getLegalActions().isEmpty())
+            return true;
         for (int i = 0; i < player1.getTeam().size(); i++){
             if (player1.getTeam().get(i).getShown() && !player1.getTeam().get(i).isDead()) {
                 return false || Battle.isBattleOver(player1, player2) != 0 || isTerminal;
@@ -106,8 +106,7 @@ public class PokemonBattleState implements Cloneable {
         }
 
         if (!availablePokemon.isEmpty()) {
-            Random random = new Random();
-            return availablePokemon.get(random.nextInt(availablePokemon.size()));
+            return availablePokemon.get(Battle.random.nextInt(availablePokemon.size()));
         } else {
             // No available Pokemon, return null or handle accordingly
             return null;
@@ -139,9 +138,9 @@ public class PokemonBattleState implements Cloneable {
             }
         }
         if (legalActionsBest.size() > 0) {
-            return legalActionsBest.get(new Random().nextInt(legalActionsBest.size()));
+            return legalActionsBest.get(Battle.random.nextInt(legalActionsBest.size()));
         }
-        return legalActions.get(new Random().nextInt(legalActions.size()));
+        return legalActions.get(Battle.random.nextInt(legalActions.size()));
     }
 
     public double getEffectiveness(Move move, Pokemon pokemon) {

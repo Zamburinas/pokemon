@@ -2,8 +2,6 @@ package com.psic.aipokemon
 
 
 import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -15,8 +13,8 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.text.Html
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
@@ -174,12 +172,9 @@ class BattleActivity : ComponentActivity() {
         val battle = Battle(player, IA)
 
         val pokemonsField: Array<String> =battle.start()
-
         battle.messages.procesarMensajes(battle)
-
         val equipo: List<Pokemon> = player.getTeam()
         cambiarFondosDeViews(this, equipo[0].getName().lowercase(), equipo[1].getName().lowercase(), equipo[2].getName().lowercase())
-
         val playerPokemon= player.currentPokemon.name.lowercase()
         val pokemon1Player = this.findViewById<View>(R.id.izquierda)
         val resourceIdPlayer = this.resources.getIdentifier(playerPokemon, "drawable", this.packageName)
@@ -194,7 +189,6 @@ class BattleActivity : ComponentActivity() {
         pokemon1Player.setBackgroundResource(resourceIdPlayer)
 
         initAnimation(resourceIdPlayer,resourceIdIA)
-
 
 
         pokemon1Ia.setOnLongClickListener(object : View.OnLongClickListener {
@@ -223,7 +217,9 @@ class BattleActivity : ComponentActivity() {
         pokemonAttack1.setBackgroundColor(Color.parseColor(mapaColores.get(movesArray[0].type)))
         pokemonAttack1.text=movesArray[0].name
         pokemonAttack1.setOnClickListener {
-            playTurn("Attack",0, battle, player, IA)
+            if (player.currentPokemon.isMoveAvailable(0)) {
+                playTurn("Attack",0, battle, player, IA)
+            }
         }
         pokemonAttack1.setOnLongClickListener {
             // Acción cuando se realiza un long click en el botón
@@ -234,7 +230,10 @@ class BattleActivity : ComponentActivity() {
         pokemonAttack2.setBackgroundColor(Color.parseColor(mapaColores.get(movesArray[1].type)))
         pokemonAttack2.text=movesArray[1].name
         pokemonAttack2.setOnClickListener {
-            playTurn("Attack",1,battle, player, IA)
+            if (player.currentPokemon.isMoveAvailable(1)) {
+                playTurn("Attack",1,battle, player, IA)
+            }
+
         }
         pokemonAttack2.setOnLongClickListener {
             // Acción cuando se realiza un long click en el botón
@@ -245,7 +244,9 @@ class BattleActivity : ComponentActivity() {
         pokemonAttack3.setBackgroundColor(Color.parseColor(mapaColores.get(movesArray[2].type)))
         pokemonAttack3.text=movesArray[2].name
         pokemonAttack3.setOnClickListener {
-            playTurn("Attack",2,battle, player, IA)
+            if (player.currentPokemon.isMoveAvailable(2)) {
+                playTurn("Attack",2,battle, player, IA)
+            }
         }
         pokemonAttack3.setOnLongClickListener {
             // Acción cuando se realiza un long click en el botón
@@ -256,7 +257,9 @@ class BattleActivity : ComponentActivity() {
         pokemonAttack4.setBackgroundColor(Color.parseColor(mapaColores.get(movesArray[3].type)))
         pokemonAttack4.text=movesArray[3].name
         pokemonAttack4.setOnClickListener {
-            playTurn("Attack",3,battle, player, IA)
+            if (player.currentPokemon.isMoveAvailable(2)) {
+                playTurn("Attack",3,battle, player, IA)
+            }
         }
         pokemonAttack4.setOnLongClickListener {
             // Acción cuando se realiza un long click en el botón
@@ -294,9 +297,6 @@ class BattleActivity : ComponentActivity() {
 
             }else playTurn("Change",2,battle, player, IA)
         }
-
-
-
     }
 
     fun activarAtaques(){
@@ -348,6 +348,7 @@ class BattleActivity : ComponentActivity() {
             Type: ${movesArray[move].type}
             Power: ${movesArray[move].power}
             Acuraccy: ${movesArray[move].accuracy}  
+            Remaining: ${movesArray[move].remaining}/${movesArray[move].totalRemaining}
             $mensaje
             """.trimIndent()
 
@@ -376,19 +377,15 @@ class BattleActivity : ComponentActivity() {
         val pokemon1Ia = this.findViewById<View>(R.id.derecha)
         pokemon1Ia.visibility = View.VISIBLE
         pokemon1Player.visibility = View.VISIBLE
-
-        val selectedMove2 = Random().nextInt(IA.getCurrentPokemon().getMoves().size)
         var aCategory = player.getCurrentPokemon().getMoves()[movement].getCategory();
 
         if(action=="Attack"){
-            //No voy a implmentar lo de los PP/MoveIndex para no complicarme queda para hacer
-            //movimiento de la IA random
 
             Battle.resolveTurn(
                 player.getCurrentPokemon(),
                 IA.getCurrentPokemon(),
                 movement,
-                selectedMove2,
+                MonteCarloTreeSearch().findBestMove(PokemonBattleState(player, IA)),
                 true
             )
             //Aquí se ha resuelto el turno
@@ -404,9 +401,9 @@ class BattleActivity : ComponentActivity() {
             }
             val chosenPokemon: Pokemon = availablePokemon.get(movement)
 
-            if(!(chosenPokemon==player.currentPokemon)) {
+            if(chosenPokemon!=player.currentPokemon) {
                 val oldPokemon = player.currentPokemon.name
-                player.currentPokemon = chosenPokemon
+                player.setCurrentPokemon(chosenPokemon)
                 val resourceIdPlayer = this.resources.getIdentifier(player.currentPokemon.name.lowercase(), "drawable", this.packageName)
                 battle.messages.add("Switching from " + oldPokemon + " to " + chosenPokemon.name)
                 battle.chat.add("Switching from " + oldPokemon + " to " + chosenPokemon.name)
@@ -415,10 +412,9 @@ class BattleActivity : ComponentActivity() {
                     player.getCurrentPokemon(),
                     IA.getCurrentPokemon(),
                     -1,
-                    selectedMove2,
+                    MonteCarloTreeSearch().findBestMove(PokemonBattleState(player, IA)),
                     true
                 )
-
                 battle.messages.procesarMensajes(battle)
                 switchAnimation(resourceIdPlayer)
                 UpdateAttack(player)
@@ -426,16 +422,12 @@ class BattleActivity : ComponentActivity() {
             }
 
         }
-
         val speedPlayer = player.getCurrentPokemon().getStats().getSpeed()
         val speedIA = IA.getCurrentPokemon().getStats().getSpeed()
-
         if (speedIA > speedPlayer) {
 
             val firstAnimator = executePlayerCode(player, HealthPlayer, BarPlayer, battle, IA, BarIA,HealthIA,0)
-
             setAnimatorWithListener(firstAnimator)
-
             firstAnimator.doOnEnd {
 
                 checkPlayerPokDead(player,battle)
@@ -454,7 +446,6 @@ class BattleActivity : ComponentActivity() {
                 secondAnimator.start()
                 attkIAAnimation(aCategory)
             }
-
             firstAnimator.start()
             attkPlAnimation(aCategory)
         }
@@ -650,9 +641,15 @@ class BattleActivity : ComponentActivity() {
     fun checkIAPokDead(IA: Player,battle: Battle,pokemon1Ia:View, player: Player) {
         if(IA.getCurrentPokemon().isDead()) {
             if(battle.isBattleOver==0) {
-                while (IA.getCurrentPokemon()
-                        .isDead()
-                ) IA.setPokemonFromTeam(Random().nextInt(3))
+                if (IA.getCurrentPokemon().isDead()) {
+                    IA.setPokemonFromTeam(
+                        MonteCarloTreeSearch().findBestMove(
+                            PokemonBattleState(
+                                player,
+                                IA
+                            )
+                        ))
+                }
 
                 val resourceIdIA = this.resources.getIdentifier(
                     IA.getCurrentPokemon().name.lowercase(),
@@ -678,7 +675,7 @@ class BattleActivity : ComponentActivity() {
             //Ganas tu
             music?.stop()
             music?.release()
-            val intent = Intent(this@BattleActivity, FinalActivity::class.java)
+            val intent = Intent(this, FinalActivity::class.java)
             intent.putExtra("string", "You WIN")
             startActivity(intent)
 
@@ -686,11 +683,10 @@ class BattleActivity : ComponentActivity() {
             //Gana la Ia
             music?.stop()
             music?.release()
-            val intent = Intent(this@BattleActivity, FinalActivity::class.java)
+            val intent = Intent(this, FinalActivity::class.java)
             intent.putExtra("string", "You LOST")
             startActivity(intent)
         }
-        System.out.println(battle.isBattleOver.toString())
     }
 
     private fun UpdateAttack(player : Player){

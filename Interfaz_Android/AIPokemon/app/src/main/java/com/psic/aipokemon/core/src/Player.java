@@ -30,14 +30,11 @@ public class Player {
             boolean isAlreadyInTeam = team.stream().anyMatch(p -> p.getName().equals(pokemon.getName()));
             if (!isAlreadyInTeam) {
                 team.add(new Pokemon(pokemon));
-                System.out.println(pokemon.getName() + " was added to " + playerName + "'s team");
                 return true;
-            } else {
-                System.out.println(pokemon.getName() + " is already in your team!");
+            } else {;
                 return false;
             }
         } else {
-            System.out.println("Your team is full");
             return false;
         }
     }
@@ -54,7 +51,6 @@ public class Player {
         if (index >= 0 && index < team.size()) {
             return team.get(index);
         } else {
-            System.out.println("Invalid index. Could not get Pokémon from the team.");
             return new Pokemon();
         }
     }
@@ -62,9 +58,6 @@ public class Player {
     public void removePokemonFromTeam(int index) {
         if (index >= 0 && index < team.size()) {
             Pokemon removedPokemon = team.remove(index);
-            System.out.println(removedPokemon.getName() + " has been removed from " + playerName + "'s team");
-        } else {
-            System.out.println("Invalid index. Could not remove Pokémon from the team.");
         }
     }
 
@@ -90,6 +83,7 @@ public class Player {
     public void setCurrentPokemon(Pokemon currentPokemon) {
         currentPokemon.shown = true;
         this.currentPokemon = currentPokemon;
+        currentPokemon.shown = true;
     }
 
     public int getRemainingPokemons() {

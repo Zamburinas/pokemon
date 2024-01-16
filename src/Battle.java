@@ -199,7 +199,7 @@ public class Battle {
             damageDone = (damage * 100.0) / defender.getMaxHealthPoints();
         }
             
-        if (true)
+        if (log)
             logMessage(String.format(Locale.US, "%s used %s dealing %.2f %% damage to %s", attacker.getName(), move.getName(), damageDone, defender.getName()));
 
         if(typeDamage>=2 && log){
