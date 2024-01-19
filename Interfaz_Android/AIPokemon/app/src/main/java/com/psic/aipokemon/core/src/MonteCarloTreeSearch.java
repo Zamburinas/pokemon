@@ -99,7 +99,7 @@ public class MonteCarloTreeSearch {
             state = new PokemonBattleState(state);
             state.performAction(state.getAction());
         }
-        double score = state.getScore(node.state) + node.damageDone*2;
+        double score = state.getScore(node.state) + node.damageDone*4;
         if (node.action != -1 &&  score > 0) {
             return score * node.state.getPlayer2().getCurrentPokemon().getMoves()[node.action].getAccuracy()/100.0;
         } else if (node.action != -1 && score < 0) {
