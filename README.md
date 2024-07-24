@@ -69,7 +69,12 @@ In terms of Pokémon battles, characterized by the complexity arising from vario
 
 
 ## Views
+The application offers several options: the first option allows you to view all available Pokémon and their respective stats; another option lets you choose Pokémon to battle against the AI; and a final option lets you battle directly against the AI with randomly selected Pokémon.
 
+https://mail.google.com/mail/u/1?ui=2&ik=3d643158f5&attid=0.4&permmsgid=msg-a:r-4986279929555607380&th=190e4464d296c80b&view=att&disp=safe&realattid=190e44637228b863d7b4
 
+https://mail.google.com/mail/u/1?ui=2&ik=3d643158f5&attid=0.3&permmsgid=msg-a:r-4986279929555607380&th=190e4464d296c80b&view=att&disp=safe&realattid=190e4463722c0011c3c3
 
+https://mail.google.com/mail/u/1?ui=2&ik=3d643158f5&attid=0.2&permmsgid=msg-a:r-4986279929555607380&th=190e4464d296c80b&view=att&disp=safe&realattid=190e44637229f70d4732
 
+https://mail.google.com/mail/u/1?ui=2&ik=3d643158f5&attid=0.1&permmsgid=msg-a:r-4986279929555607380&th=190e4464d296c80b&view=att&disp=safe&realattid=190e4461d57b5d98cd51
