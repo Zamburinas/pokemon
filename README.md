@@ -74,7 +74,7 @@ The application offers several options: the first option allows you to view all 
 
 
 
-![<img src="./assets/sql.svg" width="30" />](https://github.com/user-attachments/assets/4cee5e59-3a77-43c6-ab2f-dbc2e191335a)
+![](https://github.com/user-attachments/assets/4cee5e59-3a77-43c6-ab2f-dbc2e191335a)
 
 ![Screenshot_2024-07-24-12-24-52-839_com psic aipokemon](https://github.com/user-attachments/assets/30e77331-096e-4006-a40d-74dc6fb5382d)
 
