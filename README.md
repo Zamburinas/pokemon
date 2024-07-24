@@ -1,4 +1,5 @@
 # Pokemon Battle simulation
+This project was developed at the University of Vigo and has no commercial purpose. It is designed to be used on mobile devices.
 
 The project will involve the implementation of an AI capable of winning in the battle system of the first-generation Pokemon game. The Pokemon battle system consists of two opponents, each with the same number of Pokemon (fighting characters), which in our application will be three. The goal of the battle is to defeat all of the opponent's Pokemon. The battle is turn-based, in which you can choose a move for your Pokémon to use, or you have the option to switch to another Pokémon that is still alive.
 Each Pokemon has specific and distinct characteristics from the others. Each Pokemon has four statistics: Attack, Defense, Special, and Speed, they have four possible moves and they can also be of one or two types.
