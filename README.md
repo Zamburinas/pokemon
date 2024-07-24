@@ -9,7 +9,7 @@ Types: Pokemon can be of one or two types, and in the first generation, there ar
 
 Moves: Each Pokemon has a total of four moves, and these moves are of a specific type, for example, fire type. These move types are independent of the Pokemon's own type, meaning a water-type Pokemon could learn a fire-type move, although it's not common. Moves can be physical, special or Status(not implemented). Each move is associated with a power and an accuracy. The higher the power, the more damage it deals, and accuracy determines how likely the attack is to hit. These statistics can be displayed during the battle.
 
-Statistics:
+## Statistics:
 
 Attack (Atk): Represents the strength of the Pokemon's physical moves.
 Defense (Def): Represents the Pokemon's ability to resist damage from the opponent's physical moves.
@@ -41,12 +41,22 @@ Critical: By default it is 1, but there is a 6.25% chance of a critical hit that
 
 Other: This value will not be used.
 
-Set of Pokémons:
+## Set of Pokémons:
 
 
 
 ![Captura de pantalla 2023-11-16 165713](https://github.com/user-attachments/assets/cdcc546b-1fb1-4212-a947-a25ec64a424d)![Captura de pantalla 2023-11-16 165720](https://github.com/user-attachments/assets/88fb3d11-c508-4f3b-8c77-d15c05abdf86)![Captura de pantalla 2023-11-16 165726](https://github.com/user-attachments/assets/ededbd6a-0a7d-4216-8312-5dc004527f78)![Captura de pantalla 2023-11-16 165753](https://github.com/user-attachments/assets/f23aae42-b99e-44c6-bb62-6741d9a37630)
 ![Captura de pantalla 2023-11-16 165859](https://github.com/user-attachments/assets/2704c8bf-df53-4d97-af23-693f4657be4f)![Captura de pantalla 2023-11-16 165237](https://github.com/user-attachments/assets/089ad2c6-5ce7-4a42-839a-a51b0a7f6913)![Captura de pantalla 2023-11-16 165257](https://github.com/user-attachments/assets/ecdf2378-7e3e-4605-9a4a-90dd49cacf16)![Captura de pantalla 2023-11-16 165410 (1)](https://github.com/user-attachments/assets/b1a6fb97-22d7-4097-982e-4cc7114a8b79)![Captura de pantalla 2023-11-16 165432 (2)](https://github.com/user-attachments/assets/dd99f05e-2e43-4317-98e3-69d2ed127449)![Captura de pantalla 2023-11-16 165528 (1)](https://github.com/user-attachments/assets/f6409b98-3452-486b-9f08-74d1590aca28)
+
+
+## Set of moves:
+
+
+
+
+![1_p (1)](https://github.com/user-attachments/assets/a3daa3c1-b25a-4417-868b-102d0adefd47)![2_p](https://github.com/user-attachments/assets/46fa2506-b3d3-4907-acc0-2077813aa8f5)![3_p](https://github.com/user-attachments/assets/f4bad615-a5fe-48ee-b8dc-8dcaa5f788b8)![4_p](https://github.com/user-attachments/assets/4f00256c-9cde-45fe-86c0-830bbdf67870)![5_p](https://github.com/user-attachments/assets/0ab63f0e-e877-4d71-9477-0e10ee58914d)![6_p](https://github.com/user-attachments/assets/fdd884b6-c37f-4d10-bda8-e67f87f1a086)![6_p](https://github.com/user-attachments/assets/286f5e5a-2a2f-45bc-91d0-a7254aa4c4b3)![7_p](https://github.com/user-attachments/assets/9dfaa480-eb37-4c03-961f-cea272f416c7)![8_p](https://github.com/user-attachments/assets/d990df81-3c4e-4939-8954-270b4fe4c9e1)
+
+
 
 
 
