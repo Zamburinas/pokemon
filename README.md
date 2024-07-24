@@ -60,10 +60,14 @@ Other: This value will not be used.
 
 
 
+## Chosing Monte Carlo Tree Search 
+
+The choice of Monte Carlo Tree Search (MCTS) as the foundation for the artificial intelligence in our Pokémon game simulator has been based on the evaluation of various strategies. Unlike other methods, such as Q-learning and neural networks, which, according to previous studies, yield mediocre results even with intensive training, MCTS emerges as a more robust option.The adaptability of MCTS stands out in the context of Pokémon. In a turn-based game, where information about the opponent's moves is not always known, MCTS effectively manages sequential decision-making, making it suitable for the dynamics of Pokémon battles.
+
+In terms of Pokémon battles, characterized by the complexity arising from various species, moves, and strategies, MCTS addresses this intricate dynamic by exploring practically all possibilities, depending on the depth of exploration allowed. This approach enables it to focus on the most promising options through repeated simulations, overcoming the inherent complexity of the game.It is crucial to highlight that MCTS does not require intensive pre-training, unlike other strategies. Its ability to practically consider all possibilities, adjusting the depth of exploration, positions it as an approach that efficiently adapts to the changing complexities of the game.
 
 
-
-
+## Views
 
 
 
