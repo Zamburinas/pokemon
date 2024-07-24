@@ -1,4 +1,4 @@
-#Pokemon Battle simulation
+# Pokemon Battle simulation
 
 The project will involve the implementation of an AI capable of winning in the battle system of the first-generation Pokemon game. The Pokemon battle system consists of two opponents, each with the same number of Pokemon (fighting characters), which in our application will be three. The goal of the battle is to defeat all of the opponent's Pokemon. The battle is turn-based, in which you can choose a move for your Pokémon to use, or you have the option to switch to another Pokémon that is still alive.
 Each Pokemon has specific and distinct characteristics from the others. Each Pokemon has four statistics: Attack, Defense, Special, and Speed, they have four possible moves and they can also be of one or two types.
@@ -42,7 +42,17 @@ Critical: By default it is 1, but there is a 6.25% chance of a critical hit that
 Other: This value will not be used.
 
 Set of Pokémons:
+
+
+
 ![Captura de pantalla 2023-11-16 165713](https://github.com/user-attachments/assets/cdcc546b-1fb1-4212-a947-a25ec64a424d) ![Captura de pantalla 2023-11-16 165720](https://github.com/user-attachments/assets/88fb3d11-c508-4f3b-8c77-d15c05abdf86)![Captura de pantalla 2023-11-16 165726](https://github.com/user-attachments/assets/ededbd6a-0a7d-4216-8312-5dc004527f78)
+![Captura de pantalla 2023-11-16 165753](https://github.com/user-attachments/assets/f23aae42-b99e-44c6-bb62-6741d9a37630)![Captura de pantalla 2023-11-16 165859](https://github.com/user-attachments/assets/2704c8bf-df53-4d97-af23-693f4657be4f)![Captura de pantalla 2023-11-16 165237](https://github.com/user-attachments/assets/089ad2c6-5ce7-4a42-839a-a51b0a7f6913)![Captura de pantalla 2023-11-16 165257](https://github.com/user-attachments/assets/ecdf2378-7e3e-4605-9a4a-90dd49cacf16)![Captura de pantalla 2023-11-16 165410 (1)](https://github.com/user-attachments/assets/b1a6fb97-22d7-4097-982e-4cc7114a8b79)![Captura de pantalla 2023-11-16 165432 (2)](https://github.com/user-attachments/assets/dd99f05e-2e43-4317-98e3-69d2ed127449)![Captura de pantalla 2023-11-16 165528 (1)](https://github.com/user-attachments/assets/f6409b98-3452-486b-9f08-74d1590aca28)
+
+
+
+
+
+
 
 
 
