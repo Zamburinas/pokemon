@@ -71,10 +71,12 @@ In terms of Pokémon battles, characterized by the complexity arising from vario
 ## Views
 The application offers several options: the first option allows you to view all available Pokémon and their respective stats; another option lets you choose Pokémon to battle against the AI; and a final option lets you battle directly against the AI with randomly selected Pokémon.
 
-https://mail.google.com/mail/u/1?ui=2&ik=3d643158f5&attid=0.4&permmsgid=msg-a:r-4986279929555607380&th=190e4464d296c80b&view=att&disp=safe&realattid=190e44637228b863d7b4
+![Uploading Screenshot_2024-07-24-12-24-30-853_com.psic.aipokemon.jpg…]()
 
-https://mail.google.com/mail/u/1?ui=2&ik=3d643158f5&attid=0.3&permmsgid=msg-a:r-4986279929555607380&th=190e4464d296c80b&view=att&disp=safe&realattid=190e4463722c0011c3c3
 
-https://mail.google.com/mail/u/1?ui=2&ik=3d643158f5&attid=0.2&permmsgid=msg-a:r-4986279929555607380&th=190e4464d296c80b&view=att&disp=safe&realattid=190e44637229f70d4732
+![Screenshot_2024-07-24-12-24-35-440_com psic aipokemon](https://github.com/user-attachments/assets/4cee5e59-3a77-43c6-ab2f-dbc2e191335a)
 
-https://mail.google.com/mail/u/1?ui=2&ik=3d643158f5&attid=0.1&permmsgid=msg-a:r-4986279929555607380&th=190e4464d296c80b&view=att&disp=safe&realattid=190e4461d57b5d98cd51
+![Screenshot_2024-07-24-12-24-52-839_com psic aipokemon](https://github.com/user-attachments/assets/30e77331-096e-4006-a40d-74dc6fb5382d)
+
+
+![Screenshot_2024-07-24-12-24-59-225_com psic aipokemon](https://github.com/user-attachments/assets/daf198e6-fbc7-4245-9674-e1e3fe0d25c9)
